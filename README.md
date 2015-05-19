@@ -4,7 +4,8 @@ About: SplitType is a javascript utility that splits plain text into indivudal l
 
 TO USE: 
 SplitType attaches a function to the global window object. Call this function anytime to create a new instance of SplitType
-var mySplit = new SplitType(elements, [options])
+
+	var myText = new SplitType(elements, options)
 
 Elements: (DOM elements || selector string ) The target element or elements for a splitType call. The text content of each target element will be split according to the settings. 
 Elements can be passed into a splitType call in several forms. It accepts: a single DOM element, a nodelist, an array of elements, a jQuery object, or a selector string. 
@@ -24,4 +25,3 @@ options: (object) the settings for a splitType call. Set any of the following op
 	nodeType : ' (string) the type of HTML element that split text will be wrapped in default: 'div'
 
 	text       : (string) custom text content that will be inserted in target elemetns
-	

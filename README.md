@@ -1,41 +1,19 @@
+Split Type
 
-Module: TextSplit
-version: 0.0.2
-Author: Luke Peavey
-info: TextSplit is a utility that can be used with Velocity to create typographic animations. It splits text into indivudal words and characters, wrapping each one its own div element. The original text
-is replaced with the wrapped elements, making it possible to animate words/characters independently. 
+About: SplitType is a javascript utility that splits plain text into indivudal lines, words, and characters that can each be styled and animated independently. It does this by wrapping each line/word/character in its own HTML element. The concept for this plugin was inspired by Split Text, which is part of the GSAP animation suite. My goal was to create a similar tool that could be used with other animation libraries such as Velocity. 
 
 TO USE: 
-create a new instance of textSplit
-var myText = new TextSplit(textContent,[element],[position]) 
+SplitType attaches a function to the global window object. Call this function anytime to create a new instance of SplitType
+var mySplit = new SplitType(elements, [options])
 
-Properties
+Elements: (DOM elements || selector string ) The target element or elements for a splitType call. The text content of each target element will be split according to the settings. 
+Elements can be passed into a splitType call in several forms. It accepts: a single DOM element, a nodelist, an array of elements, a jQuery object, or a selector string. 
 
-myText.words gives you an array of all the wrapped words
-myText.chars array of all the wrapped characters
-
-You can pass either of these arrays into a velocity call as its first arguement to animate all word/chars. 
-Using velocity features like 'stagger' and 'drag' you can increment the animation speed and delay 
-for each element without making multiple velocity calls. 
-
-$.Velocity.animate(
-	elements: myText.chars, 
-	properties: {rotateX: [0, '-90deg'], translateZ: [0, '-100px'], opacity: [1, 0]}, 
-	options: {stagger: 100, drag: true, duration: 500, visibility: 'visible'}
-)
-Split text elements also have classes that can be used to target them. 
-.split-text : wrapper that holds all the text
-.split-word : wrapper for words 
-.split-char : wrapper for characters 
-
-
-textContent : DOM Element | string 
-This specifies the text that will be split. You can target a DOM Element that contains text content (ie 'h1'),
-or pass an arbitrary string of text that you want to split. If the first argument is a string of text, the second 
-argument has to be a DOM element where the text will be inserted. 
-
-Element : DOM element
-The element where text will be inserted. 
-
-Position : string | 
-If set to absolute, the position of words/charaters will be set to absolute. The position of elements is set based on their natural position, so the initial appearance of text will be the same. However, with absolure position, text will no longer re-flow naturally when the browser is resized. 
+options: (object) the settings for a splitType call. Set any of the following options: /n/
+	lineClass  : (string) the css class for split lines 
+	wordClass  : (string) the css class for split words 
+	charClass  : (string) the css class for split characters
+	split      : (string) a comma separated list of the split type to use ('lines, words, chars')
+	position   : (string) choices "absolute" or "relative"
+	nodeType : ' (string) the type of HTML element that split text will be wrapped in default: 'div'
+	text       : (string) custom text content that will be inserted in target elemetns

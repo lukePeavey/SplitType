@@ -18,10 +18,10 @@ options: (object) the settings for a splitType call. Set any of the following op
 
 	charClass  : (string) the css class for split characters
 
-	split      : (string) a comma separated list of the split type to use ('lines, words, chars')
+	split      : (string) default: 'lines, words, chars' | a comma separated list of the split type to use 
 
-	position   : (string) choices "absolute" or "relative"
+	position   : (string) "absolute" or "relative"
 
-	nodeType : ' (string) the type of HTML element that split text will be wrapped in default: 'div'
+	nodeType   : (string) default: 'div' | the type of HTML element that split text will be wrapped in 
 
 	text       : (string) custom text content that will be inserted in target elemetns

@@ -25,3 +25,21 @@ options: (object) the settings for a splitType call. Set any of the following op
 	nodeType   : (string) default: 'div' | the type of HTML element that split text will be wrapped in 
 
 	text       : (string) custom text content that will be inserted in target elemetns
+
+PROPERTIES AND METHODS:
+
+Each splitType call returns a new instance of SplitType. There are several properties and methods which can be accessed on the splitTYpe instance. 
+
+	instance.lines // returns an array of DOM elements for all the split lines in this splitType instance.
+	instance.words // an array of DOM elements for each split word in the instance
+	instance.chars // an array of DOM elements for each split character in the instance 
+
+	instance.split(options) // the split method initiates the text splitting process. 
+	This get called automatically when a new splitType instance is created. But it 
+	can also be called again to re-split text using new options. 
+
+	instance.revert() // Reverts the target elements back to their original content. 
+
+
+
+

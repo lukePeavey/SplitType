@@ -9,11 +9,19 @@ var mySplit = new SplitType(elements, [options])
 Elements: (DOM elements || selector string ) The target element or elements for a splitType call. The text content of each target element will be split according to the settings. 
 Elements can be passed into a splitType call in several forms. It accepts: a single DOM element, a nodelist, an array of elements, a jQuery object, or a selector string. 
 
-options: (object) the settings for a splitType call. Set any of the following options: /n/
+options: (object) the settings for a splitType call. Set any of the following options:
+
 	lineClass  : (string) the css class for split lines 
+
 	wordClass  : (string) the css class for split words 
+
 	charClass  : (string) the css class for split characters
+
 	split      : (string) a comma separated list of the split type to use ('lines, words, chars')
+
 	position   : (string) choices "absolute" or "relative"
+
 	nodeType : ' (string) the type of HTML element that split text will be wrapped in default: 'div'
+
 	text       : (string) custom text content that will be inserted in target elemetns
+	

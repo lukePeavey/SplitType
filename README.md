@@ -17,7 +17,7 @@ This will 'split' the text content in each of the `elements` using the specified
 #### Parameters
 ##### elements 
 
-The elements that will be targeted by a SplitType call.  WARNING Any nested HTML tags inside the elements will be stripped when text is split. 
+The elements that will be targeted by a SplitType call.  WARNING Any nested HTML tags inside the elements will be stripped when text is split. The elements can be passed in in any of the following ways: 
 + Single DOM element
 + Nodelist 
 + jQuery/Zepto object
@@ -66,7 +66,8 @@ instance.chars
 // METHODS
 instance.split(options) 
 // This method initiates the text splitting process. 
-// It gets called automatically when a splitType instance is created. also be called again to re-split text using new options. 
+// It gets called automatically when a splitType instance is created. 
+// It also be called manually to re-split text using different options. 
 
 instance.revert() 
 // Reverts the target elements back to their original content. 
@@ -80,9 +81,8 @@ var myText = new SplitType('.banner h1', {
 	position: 'absolute'
 	});
 
-// myText.chars gives returns an array of all the split characters in the text. 
+// myText.chars returns an array of all the split characters in the text. 
 // this can be passed directly into a velocity call to animate the characters 
 Velocity.animate( myText.chars, 'transition.slideDownBigIn', {duration: 1000, stagger: 100})
 
-// This will transition the text into view by sliding each character down into place
 ````

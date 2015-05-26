@@ -1,71 +1,90 @@
-## splitType
+## SplitType
 
 ### About: 
 
-SplitType is a javascript utility that splits plain text into individual lines, words, and characters that can each be styled and animated independently. It does this modifying the DOM behind the scenes, wrapping each line/word/character in its own element. The concept for this plugin was inspired by Split Text, which is part of the GSAP animation suite. My goal was to create a similar tool that could be used with other animation libraries such as Velocity. 
+SplitType 'splits' the text content of HTML elements so that the each line, word, and character of text can be animated independently. The concept for this plugin was inspired by Split Text, which is part of the GSAP animation platform. My goal was to create a similar tool that could be used with other animation libraries such as Velocity. 
 
 ### How To Use:  
 
-SplitType attaches a function to the global window object. Call this function anytime to create a new instance of SplitType
+Once its loaded on the page, the SplitType() function can be called anytime to split text in one or more elements. SplitType is constructor, so it should always be called using the `new` operator. 
 
 ``` js 
-var mySplit = new SplitType(elements, [options])
+// Creates a new instance of splitType and assigns it variable 
+var instance = new SplitType(elements, [options])
 ```
+This will 'split' the text content in each of the `elements` using the specified `options`. Multiple instances of SplitType can be created on the same page.
 
-##### elements (DOM elements | selector string )
+##### Parameters
++ elements 
 
-Sets the target element(s) for a splitType call. The text content of each target element will be split according settings (see below).
-Elements can be passed into a splitType call in several forms. It accepts: a single DOM element, a nodelist, an array of elements, a jQuery object, or a selector string. 
+The elements that will be targeted by a SplitType call. WARNING Any nested HTML tags inside the elements will be stripped when text is split. 
+++ Single DOM element
+++ Nodelist 
+++ jQuery/Zepto object
+++ Array (of multiple elements, nodelists, jquery objects)
+++ Selector String 
 
-##### options: (object) 
++ options: (object) 
 
 the settings for a splitType call. Set any of the following options:
-	
-	lineClass : (string) | default: 'split-line'
-	the css class for split lines 
+`
+lineClass : (string) | default: 'split-line'
+the css class for split lines 
 
-	wordClass : (string) | default: 'split-word'
-	the css class for split words 
+wordClass : (string) | default: 'split-word'
+the css class for split words 
 
-	charClass : (string) | default: 'split-char'
-	the css class for split characters
+charClass : (string) | default: 'split-char'
+the css class for split characters
 
-	split : (string) | default: 'lines, words, chars' 
-	defines how the text will be split up. It takes a comma separated list of the split types to use
-	choices: lines | words | chars 
+split : (string) | default: 'lines, words, chars' 
+defines how the text will be split. Takes a comma separated list of the split types to use
+choices: lines | words | chars 
 
-	position : (string) default: 'relative'
-	the css positioning used for split text elements 
-	choices: 'relative' | 'absolute'
+position : (string) default: 'relative'
+the css positioning used for split text elements 
+choices: 'relative' | 'absolute'
 
-	nodeType : (string) default: 'div'
-	the type of HTML element that split text will be wrapped in
+nodeType : (string) default: 'div'
+the type of HTML element that split text will be wrapped in
 
-	text : (string | boolean) default: false
-	the text to be split. If set, this will replace the existing text content in target element 
+text : (string | boolean) default: false
+insert a custom string of text into the target element before splitting.
+` 
 
-#### PROPERTIES AND METHODS:
+#### Properties And Methods:
 
 Each SplitType call returns a new instance of SplitType. There are several properties and methods which can be accessed on the splitType instance. 
 ``` js
-Example: var mySplit = new SplitType('h1'); 
+var instance = new SplitType('h1'); 
 
-mySplit.lines 
+instance.lines 
 // returns an array of DOM elements for all split lines in the splitType instance.
-mySplit.words 
+instance.words 
 // returns an array of DOM elements for each split word in the instance
-mySplit.chars 
-// returns an array of DOM elements for each split character in the instance 
+instance.chars 
+s an array of DOM elements for each split character in the instance 
 
-mySplit.split(options) 
+instance.split(options) 
 // This method initiates the text splitting process. 
 // It gets called automatically when a splitType instance is created.
-// It can also be called again to re-split text using new options. 
+ also be called again to re-split text using new options. 
 
-mySplit.revert() 
+instance.revert() 
 // Reverts the target elements back to their original content. 
 ```
 
+#### Using splitType with Velocity
+``` js
+// This splits the text in '.banner h1' into both words and characters using absolute positioning. 
+var myText = new SplitType('.banner h1', {
+	split:'words, chars', 
+	position: 'absolute'
+	});
 
+// myText.chars gives returns an array of all the split characters in the text. 
+// this can be passed directly into a velocity call to animate the characters 
+Velocity.animate( myText.chars, 'transition.slideDownBigIn', {duration: 1000, stagger: 100})
 
-
+// This will transition the text into view by sliding each character down into place
+````

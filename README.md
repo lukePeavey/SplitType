@@ -2,7 +2,7 @@
 
 ### About: 
 
-SplitType 'splits' the text content of HTML elements so that the each line, word, and character of text can be animated independently. The concept for this plugin was inspired by Split Text, which is part of the GSAP animation platform. My goal was to create a similar tool that could be used with other animation libraries such as Velocity. 
+SplitType 'splits' the text content of HTML elements so that each line, word, and character of text can be animated independently. The concept for this plugin was inspired by Split Text, which is part of the GSAP animation platform. My goal was to create a similar tool that could be used with other animation libraries such as Velocity. 
 
 ### How To Use:  
 

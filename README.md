@@ -14,61 +14,59 @@ var instance = new SplitType(elements, [options])
 ```
 This will 'split' the text content in each of the `elements` using the specified `options`. Multiple instances of SplitType can be created on the same page.
 
-##### Parameters
-+ elements 
+#### Parameters
+##### elements 
 
-The elements that will be targeted by a SplitType call. WARNING Any nested HTML tags inside the elements will be stripped when text is split. 
-++ Single DOM element
-++ Nodelist 
-++ jQuery/Zepto object
-++ Array (of multiple elements, nodelists, jquery objects)
-++ Selector String 
+The elements that will be targeted by a SplitType call.  WARNING Any nested HTML tags inside the elements will be stripped when text is split. 
++ Single DOM element
++ Nodelist 
++ jQuery/Zepto object
++ Array (of multiple elements, nodelists, jquery objects)
++ Selector String 
 
-+ options: (object) 
+##### options: (object) 
 
 the settings for a splitType call. Set any of the following options:
-`
-lineClass : (string) | default: 'split-line'
-the css class for split lines 
 
-wordClass : (string) | default: 'split-word'
-the css class for split words 
+	lineClass : (string) | default: 'split-line'
+	the css class for split lines 
 
-charClass : (string) | default: 'split-char'
-the css class for split characters
+	wordClass : (string) | default: 'split-word'
+	the css class for split words 
 
-split : (string) | default: 'lines, words, chars' 
-defines how the text will be split. Takes a comma separated list of the split types to use
-choices: lines | words | chars 
+	charClass : (string) | default: 'split-char'
+	the css class for split characters
 
-position : (string) default: 'relative'
-the css positioning used for split text elements 
-choices: 'relative' | 'absolute'
+	split : (string) | default: 'lines, words, chars' 
+	defines how the text will be split. Takes a comma separated list of the split types to use
+	choices: lines | words | chars 
 
-nodeType : (string) default: 'div'
-the type of HTML element that split text will be wrapped in
+	position : (string) default: 'relative'
+	the css positioning used for split text elements 
+	choices: 'relative' | 'absolute'
 
-text : (string | boolean) default: false
-insert a custom string of text into the target element before splitting.
-` 
+	nodeType : (string) default: 'div'
+	the type of HTML element that split text will be wrapped in
+
+	text : (string | boolean) default: false
+	insert a custom string of text into the target element before splitting.
 
 #### Properties And Methods:
 
 Each SplitType call returns a new instance of SplitType. There are several properties and methods which can be accessed on the splitType instance. 
 ``` js
-var instance = new SplitType('h1'); 
-
+// PROPERTIES
 instance.lines 
 // returns an array of DOM elements for all split lines in the splitType instance.
 instance.words 
 // returns an array of DOM elements for each split word in the instance
 instance.chars 
-s an array of DOM elements for each split character in the instance 
+// returns an array of DOM elements for each split character in the instance 
 
+// METHODS
 instance.split(options) 
 // This method initiates the text splitting process. 
-// It gets called automatically when a splitType instance is created.
- also be called again to re-split text using new options. 
+// It gets called automatically when a splitType instance is created. also be called again to re-split text using new options. 
 
 instance.revert() 
 // Reverts the target elements back to their original content. 

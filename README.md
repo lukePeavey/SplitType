@@ -1,8 +1,7 @@
 ## SplitType
 
-A javascript plugin that "splits" plain text into indivudual lines, words and characters, which can each be animated and styled independly. This makes it easy to create complex typographic animations without the use of canvas. It has no dependencies and can be used with any css or javascript animation library. 
-
-<i>The concept for this plugin SplitText,  <i>
+A javascript plugin that "splits" plain text into indivudual lines, words and characters, which can each be animated and styled independly. This makes it easy to create complex typographic animations without the use of canvas.<br>
+Compatible with GSAP and Velocity 
 
 #### How To Use:  
 

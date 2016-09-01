@@ -1,1113 +1,730 @@
-/** SplitType
- * A javascript utility that splits text into indivual lines words and characters
- * that can be animated and styled independently.
- * Date: May 2015
+/**
+ * SplitType
+ * A javascript utility that splits text into individual lines, words, and characters
+ * so they can be animated and styled independently.
+ * @updated: 6/6/2016
  * @author: Luke Peavey
- * @version: 0.8
+ * @version: 1.0
  * @license MIT
  */
+  // Support module loaders
+(function ( global, factory ) {
+  if ( typeof define === 'function' && define.amd ) {
+    define( factory );
+  } else if ( typeof exports !== 'undefined' ) {
+    module.exports = factory();
+  } else {
+    factory();
+  }
+})( this, function factory() {
+  window.SplitType = (function ( window, document, undefined ) {
+    // Fail silently on ancient browsers ( IE <= 8 )
+    if ( ! document.addEventListener || ! Function.prototype.bind ) return;
 
-var SplitType = (function ( window, document, undefined ) {
     'use strict';
+    // global vars
+    var DEBUG                 = false;
+    var expando               = 'splitType' + (new Date() * 1);
+    var cache                 = {};
+    var uid                   = 0;
+    var push                  = Array.prototype.push;
+    var slice                 = Array.prototype.slice;
+    var keys                  = Object.keys;
+    var hasOwn                = Object.prototype.hasOwnProperty;
+    var defineProperty        = Object.defineProperty;
+    var defineProperties      = Object.defineProperties;
+    var getPropertyDescriptor = Object.getOwnPropertyDescriptor;
+    var createFragment        = document.createDocumentFragment.bind( document );
+    var createTextNode        = document.createTextNode.bind( document );
 
-    /********************
-     - DEFAULT SETTINGS -
-     *********************/
-// Internal defaults object 
-// Stores the global default settings used for all splitType calls. 
-<<<<<<< HEAD
-var _defaults = {
-    lineClass : 'line',
-    wordClass : 'word',
-    charClass : 'char',
-    splitClass : 'split-item',
-    split : 'lines, words, chars',
-    position : 'rel',
-    nodeName : 'div',
-    text : false,
-    // === Read Only === 
-    // (boolean) checks settings to see if text is being split into lines 
-    get splitLines() { return this.split.indexOf('lines') !== -1 },
-    // (boolean) checks settings to see if text is being split  into words 
-    get splitWords() { return this.split.indexOf('words') !== -1 },
-    // (boolean) checks settings to see if text is being split into being characters 
-    get splitChars() { return this.split.indexOf('chars') !== -1 },
-    // (boolean) checks settings to see if position is set to absolute
-    get isAbsolute() { return typeof this.position === "string" && this.position.toLowerCase() === 'absolute' || this.absolute === true }
-}
-
-/** 
- * SplitType.defaults is public property on the global SplitType object. 
- * It allows people to access or modify global default settings from outside.
- * Individual settings can be changed like this: SplitType.settings.settingName = 'new value'
- * Multiple settings can be changed like this: SplitType.settings = {setting1: 'value1', setting2: 'value2'}
- */
-Object.defineProperty(SplitType, 'settings', {
-    get: function() { return _defaults },
-    set: function(obj) { 
-        _defaults = extend(_defaults, obj); 
-    }
-})
-
-/***************************************
- - Utility Methods - 
- ***************************************/  
-/* jquery type */ 
- function type( obj ) {
-    if ( obj == null ) {
-        return obj + "";
-    }
-    return typeof obj === "object" || typeof obj === "function" ? 
-        class2type[ toString.call(obj) ] || "object" : 
-            typeof obj;
-};
-/* jquery isArraylike */
-function isArraylike(obj) {
-    if(typeof obj !== 'object' || obj === null) return false; 
-    var length = obj.length; 
-    return length === 0 || typeof length === 'number' && length > 0 && (length - 1) in obj;
-};
-/* Shorthands for native DOM methods */ 
-var text = function(str) { return document.createTextNode(str) }
-var space = function() { return text(' ') }
-var fragment = function() { return document.createDocumentFragment() } 
-
-/* for jquery type */ 
-var class2type = {}, 
-toString = class2type.toString; 
-'Boolean Number String Function Array Object Null'.split(' ').
-forEach(function(name) { class2type["[object " + name + "]"] = name.toLowerCase() });
-
-/** 
- * Merges two or more objects into a new object. 
- * Chris Ferdinandi https://gist.github.com/cferdinandi/ 
- * Objects on the right override matching properties of those on the left. 
- * Modified to use getOwnPropertyDescriptor and defineProperty to allow copying of getter/setters
- * IE9 and up
- */
-function extend( objects ) {
-    var extended = {};
-    var merge = function (obj) {
-        for (var prop in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-                var propDefinition = Object.getOwnPropertyDescriptor(obj, prop)
-                Object.defineProperty(extended, prop, propDefinition)
-=======
+    /**
+     * The global default settings used for all SplitType calls. Default
+     * settings can be modified via the static 'defaults' property on the
+     * SplitType constructor.
+     * @private
+     */
     var _defaults = {
-        lineClass  : 'line',
-        wordClass  : 'word',
-        charClass  : 'char',
-        splitClass : 'split-item',
-        split      : 'lines, words, chars',
-        position   : 'rel',
-        nodeName   : 'div',
-        text       : false,
-        // === Read Only ===
-        // (boolean) checks settings to see if text is being split into lines
-        get splitLines() {
-            return this.split.indexOf( 'lines' ) !== - 1
-        },
-        // (boolean) checks settings to see if text is being split  into words
-        get splitWords() {
-            return this.split.indexOf( 'words' ) !== - 1
-        },
-        // (boolean) checks settings to see if text is being split into being characters
-        get splitChars() {
-            return this.split.indexOf( 'chars' ) !== - 1
-        },
-        // (boolean) checks settings to see if position is set to absolute
-        get isAbsolute() {
-            return typeof this.position === "string" && this.position.toLowerCase() === 'absolute' || this.absolute === true
-        }
-    }
+      splitClass : '',
+      lineClass  : 'line',
+      wordClass  : 'word',
+      charClass  : 'char',
+      split      : 'lines, words, chars',
+      position   : 'relative',
+      absolute   : false, // alternate syntax for setting position.
+      tagName    : 'div',
+      DEBUG      : false,
+    };
 
-    /**
-     * SplitType.defaults is public property on the global SplitType object.
-     * It allows people to access or modify global default settings from outside.
-     * Individual settings can be changed like this: SplitType.settings.settingName = 'new value'
-     * Multiple settings can be changed like this: SplitType.settings = {setting1: 'value1', setting2: 'value2'}
-     */
-    Object.defineProperty( SplitType, 'settings', {
-        get : function () {
-            return _defaults
-        },
-        set : function ( obj ) {
-            _defaults = extend( _defaults, obj );
-        }
+    // Read-only settings: splitLines, splitWords, splitChars
+    defineProperty( _defaults, 'DEBUG', {
+      get : function () {
+        return _defaults.DEBUG
+      },
+      set : function ( value ) {
+        DEBUG = _defaults.DEBUG = value;
+      }
     } );
 
-    /***************************************
-     - Utility Methods -
-     ***************************************/
+    /***********************
+     - Utility Functions -
+     ***********************/
+    function isObject( obj ) {
+      return obj !== null && typeof obj === 'object';
+    }
 
-    /* isObject */
-    function isObject(obj) {
-        return obj !== null && typeof obj == 'object';
-    }
-    /* isNode */
-    function isNode( obj ) {
-        return isObject(obj) && ( obj.nodeType === 1 || obj.nodeType === 3 || obj.nodeType === 11 );
-    }
-    /* isArraylike (jQuery) */
     function isArraylike( obj ) {
-        return isObject(obj) && typeof obj.length === 'number' && obj.length >  0;
+      return isObject( obj ) && typeof obj.length === 'number' && obj.length > 0; // returns false for empty arrays,
+                                                                                  // which is fine for our purposes
     }
 
-    /* get object class (jQuery)  */
-    function type( obj ) {
-        return obj == null ? String(null) :
-            ( typeof obj === "object" || typeof obj === "function" ? ( class2type[ toString.call( obj ) ] || "object" ) : typeof obj )
+    function isPlainObject( obj ) {
+      return isObject( obj ) && Object.prototype.toString.call( obj ) === '[object Object]';
     }
 
-
-
-    /* Shorthands for native DOM methods */
-    var text = document.createTextNode.bind(document);
-    var fragment = document.createDocumentFragment.bind(document);
-    var space = function() { return text(' ')};
-
-    /* for jquery type */
-    var class2type = {},
-        toString   = class2type.toString;
-    'Boolean Number String Function Array Object Null'.split( ' ' ).forEach( function ( name ) {
-        class2type[ "[object " + name + "]" ] = name.toLowerCase()
-    } );
-
-    /**
-     * Merges two or more objects into a new object.
-     * Chris Ferdinandi https://gist.github.com/cferdinandi/
-     * Objects on the right override matching properties of those on the left.
-     * Modified to use getOwnPropertyDescriptor and defineProperty to allow copying of getter/setters
-     * IE9 and up
-     */
-    function extend( objects ) {
-        var extended = {};
-        var merge    = function ( obj ) {
-            for ( var prop in obj ) {
-                if ( Object.prototype.hasOwnProperty.call( obj, prop ) ) {
-                    var propDefinition = Object.getOwnPropertyDescriptor( obj, prop )
-                    Object.defineProperty( extended, prop, propDefinition )
-                }
->>>>>>> master
-            }
-        };
-        merge( arguments[ 0 ] );
-        for ( var i = 1; i < arguments.length; i ++ ) {
-            var obj = arguments[ i ];
-            if ( typeof obj === 'object' && obj !== null )
-                merge( obj );
-        }
-        return extended;
+    function isNode( obj ) {
+      return isObject( obj ) && /^(1|3|11)$/.test( obj.nodeType );
     }
 
-
-    function position( elem ) {
-        if ( ! elem ) return;
-        return {
-            top    : elem.offsetTop,
-            left   : elem.offsetLeft,
-            width  : elem.offsetWidth,
-            height : elem.offsetHeight,
-        }
+    function isString( obj ) {
+      return typeof obj === 'string';
     }
 
     /**
-     * Inserts a new stylesheet in the page's <head>.
-     * css rules can be added to the stylesheet using the addCSSRule() method
-     * // var mySheet = styleSheet();
-     * // addCSSRule(mySheet, "body", "color: #fff");
-     * David Walsh (http://davidwalsh.name/add-rules-stylesheets)
-     * @returns: a CSSStyleSheet object
+     * Iterates array, arraylike, and plain objects
+     * NOTE: non-iterable objects gets passed through
+     * @param object object|array - the array or object to iterate
+     * @param callback function - a function to be executed once for each item in the array.
+     * @param thisArg object - the context for the callback function
      */
-    function styleSheet() {
-        var style = document.createElement( "style" ); // Create the <style> node
-        style.appendChild( document.createTextNode( "" ) ); // Webkit hack;
-        document.head.appendChild( style ); // add style element to page
-        return style.sheet; // Returns the CSSStyleSheet object
+    function forEach( object, callback, thisArg ) {
+      var obj    = Object( object ); // the target object
+      var values = isArraylike( obj ) ? obj : ( isPlainObject( obj ) ? keys( obj ) : [ obj ] ); // the values to
+                                                                                                // traverse (see doc
+                                                                                                // comment)
+      var length = parseInt( values.length ) || 0; // the length of values
+      var index  = 0; // index
+      // Iterate through the values, execute the callback with three arguments:
+      // 1) the current item 2) the current index 3) the object being traversed.
+      for ( ; index < length; index ++ ) {
+        callback.call( thisArg, values[ index ], index, obj );
+      }
     }
 
-    function addCSSRule( sheet, selector, rules, index ) {
-        if ( "insertRule" in sheet ) {
-            sheet.insertRule( selector + "{" + rules + "}", (index || 0) );
-        }
-        else if ( "addRule" in sheet ) {
-            sheet.addRule( selector, rules, (index || 0) );
-        }
-    }
-
-    /** Creates an HTML Element with the specified attributes and content.
-     * @param: attributes (object):
-     *   @param: class: (string) one or more class names
-     *   @param: style: (string) string of css styles
-     *   @param: tagName: (string) the type of HTML element
-     *   @param: content: (string) the inner HTML of the new element (HTML string or text)
-     *   @param: data: (object) attach custom data attributes to the element
-     *     Define data attrs as key value pairs { dataName : 'value' }
-     * @returns: HTML string
+    /**
+     * Merges user options with default settings (shallow).
+     * Returns a new object without modifying source objects.
+     * Only keys that exist on target obj will be copied to the new object.
+     * @note: non-writable properties on the target object will not be over-ridden
+     * @returns object
      */
-    function createHtmlElement( attributes ) {
-        var a              = attributes || {},
-            content        = typeof a.content === 'string' ? a.content : '',
-            tagName        = a.tagName || _defaults.nodeName,
-            classNames     = ((a.class || '') + ' ' + _defaults.splitClass).trim(),
-            styleAttribute = a.style ? 'style="' + a.style + '"' : '',
-            dataAttribute  = '';
-        // Add custom data attributes
-        type( a.data ) === 'object' && Object.keys( a.data ).forEach( function ( key ) {
-            dataAttribute += ' data-' + key + '=' + a.data[ key ];
-        } )
-        return '<' + tagName + ' class="' + classNames + '" ' + styleAttribute + dataAttribute + '>' + content + ' </' + tagName + '>';
-    };
-<<<<<<< HEAD
-    merge(arguments[0]);
-    for (var i = 1; i < arguments.length; i++) {
-        var obj = arguments[i]; 
-        if( typeof obj === 'object' && obj !== null ) 
-            merge(obj); 
+    function extend( target, object ) {
+      target = Object( target );
+      object = Object( object );
+      return Object.getOwnPropertyNames( target ).reduce( function ( extended, key ) {
+        return defineProperty( extended, key, getPropertyDescriptor( object, key ) || getPropertyDescriptor( target, key ) );
+      }, {} )
     }
-    return extended;
-};
 
-/**
- * Tests if an object is an element-like node. For our purposes, this includes: 
- * a) element node, b) text node, c) document fragment.  
- * @param: obj: the object to test 
- * returns: boolean 
- */
-function isElement(obj) {
-    if (typeof obj !== 'object' || obj === null) return false; 
-    return obj.nodeType === 1 || obj.nodeType === 3 || obj.nodeType === 11; 
-}
-/** 
- * Inserts a new stylesheet in the page's <head>.  
- * css rules can be added to the stylesheet using the addCSSRule() method
- * // var mySheet = styleSheet(); 
- * // addCSSRule(mySheet, "body", "color: #fff");
- * David Walsh (http://davidwalsh.name/add-rules-stylesheets)
- * @returns: a CSSStyleSheet object 
- */ 
-function position(elem) {
-    if (!elem) return; 
-    return {
-        top: elem.offsetTop, 
-        left: elem.offsetLeft, 
-        width: elem.offsetWidth, 
-        height: elem.offsetHeight, 
-    }
-}
-function styleSheet() {
-    var style = document.createElement("style"); // Create the <style> node
-    style.appendChild(document.createTextNode("")); // Webkit hack;     
-    document.head.appendChild(style); // add style element to page
-    return style.sheet; // Returns the CSSStyleSheet object
-}
-function addCSSRule(sheet, selector, rules, index) {
-    if( "insertRule" in sheet ) {
-        sheet.insertRule(selector + "{" + rules + "}", (index || 0));
-    }
-    else if( "addRule" in sheet ) {
-        sheet.addRule(selector, rules, (index || 0));
-    }
-}
-
-/** Creates an HTML Element with the specified attributes and content. 
-  * @param: attributes (object): 
-  *     @param: class: (string) one or more class names
-  *     @param: style: (string) string of css styles 
-  *     @param: tagName: (string) the type of HTML element
-  *     @param: content: (string) the inner HTML of the new element (HTML string or text)
-  *     @param: data: (object) attach custom data attributes to the element
-  *         Define data attrs as key value pairs { dataName : 'value' } 
-  * @returns: HTML string 
-  */
-function createHtmlElement(attributes) {
-    var a = attributes || {},
-        content = typeof a.content === 'string' ? a.content : '',
-        tagName = a.tagName || _defaults.nodeName,
-        classNames = ((a.class || '') + ' ' + _defaults.splitClass).trim(),
-        styleAttribute = a.style ? 'style="' + a.style + '"' : '',
-        dataAttribute = ''; 
-        // Add custom data attributes 
-        type(a.data) === 'object' && Object.keys(a.data).forEach(function(key) {
-            dataAttribute += ' data-' + key + '=' + a.data[key] ; 
-        })
-    return '<' + tagName + ' class="' + classNames + '" ' + styleAttribute + dataAttribute + '>'+ content + ' </'+ tagName + '>';  
-};
-
-
-/** Create a DOM Element with the specified attributes and content. 
-  * Same as createHtmlElement() except it returns a DOM node instead of HTML string. 
-  * @param: attributes (object) :
-  *     @param: class: (string) one or more class names
-  *     @param: style: (string) string of css styles 
-  *     @param: nodeName: (string) the type of element
-  *     @param: content: (element node | array of elements | string) 
-  *     @param: data: (object) attach custom data attributes to the element. 
-  *         Define as key value pairs {dataName:'value'}
-  * @returns: Element Node 
-  */
-function createDomElement(attributes) {
-    // Let a = attributes;
-    var a = attributes || {},
-            content = a.content,
-            data = a.data,
-            node = document.createElement( a.nodeName || _defaults.nodeName ); 
-    // 1. Set the class, style, and data.
-    node.className = (( a['class'] || '') + ' ' + _defaults.splitClass).trim(); 
-    a.style && (node.style.cssText = a.style); 
-    type(data) === 'object' && Object.keys(data).forEach(function(prop) {
-        node.dataset[prop] = data[prop]; 
-    })
-    // If content was passed in, determine how to insert it
-    switch ( type(content) ) {
-        // if its a single node, append it to the element
-        case "object" : 
-            isElement( content ) && node.appendChild( content ); 
-        break; 
-        // if its an array of elements, interate over array and append each element
-        case "array" : 
-            content.forEach(function(element) {
-                isElement( element ) &&  node.appendChild( element );
-            });  
-        break;
-        // if its a string, insert it as HTML 
-        case "string" : node.innerHTML = content; 
-    }
-    return node; 
-}
-
-
-/****************************************
- - Internal Functions - 
- ***************************************/ 
-
-/** Creates an array of the target elements for a splitType call. 
-  * Elements can be passed into splitType() in several different forms: 
-  * a) single DOM element; b) nodelist; c) jquery/zepto object; d) array; e) selector string;
-  * this method takes those various formats and converts them into a plain array of DOM elements.
-  * @param: elements: any of the formats listed above  
-  * @returns: an array of DOM nodes representing each of the target elements
-  */
-function _sanitizeElements( elements ) {
-    var elementsArray = []; 
-    // 1. If elements is a selector string...
-    // its its an ID, use getElementById to search for a single element (faster) 
-    // Otherwise, use querySelectorAll to find a set of matched elements
-    if ( typeof elements === "string" ) {
-        var selector = elements.trim(); 
-        if (selector.split(' ').length === 1 && selector.indexOf(',') > -1 
-                && selector.indexOf('>') > -1 && selector.charAt(0) === '#' ) {
-            elements = document.getElementById( selector.substring(1) )
-        } else {
-            elements = document.querySelectorAll(selector); 
-        }
-    }
-    // If elements is an array, nodelist, or jquery object...
-    // flatten it and convert it to a plain array of DOM elements
-    if( isArraylike( elements ) ) {
-        var len = elements.length;
-        for (var i = 0; i < len; i++ ) {
-            if(isArraylike(elements[i])) {
-                for(var j = 0, len2 = elements[i].length; j<len2; j++) {
-                    isElement( elements[i][j] ) && elementsArray.push(elements[i][j])
-                }
-            } else {
-                isElement(elements[i]) && elementsArray.push(elements[i]);  
-            }
-        }
-    // If elements is single element...
-    // just wrap it an array so we can use iteration methods
-    } else if ( isElement(elements) ) {
-        elementsArray = [elements]; 
-    }
-    return elementsArray; 
-}
-/** Splits the text content of a single element according to the settings for that instance. 
-  * @param: element (DOM Node):  the target element for the split operation
-  * @this: refers to the splitType instance 
-  */
-function _split (element, index) {
-    var data = this._SPLIT,
-        s = data.settings,
-    // Define Variables 
-        splitLines = s.splitLines,
-        splitWords = s.splitWords,
-        splitChars = s.splitChars,
-        isAbsolute = s.isAbsolute,
-        lines = [], words = [], chars =[], 
-        textContent = element.textContent.replace(/\s+/g,' ').trim(),
-        splitText = fragment(),
-        wordContent, word, charNode; 
-
-    // 1. Iterate over each word of text 
-    textContent.split(' ').forEach(function(currentWord, index) {
-            // 2. If splitting text into characters... 
-            if( splitChars ) {
-                // Let wordContent be a doc fragment to hold the wrapped character elements for this word
-                wordContent = fragment(); 
-                // Iterate over each character of text in the current word.
-                // Wrap the character in a new DOM element. 
-                // Append the element to wordContent.
-                // Push the element to the chars array.
-                currentWord.split('').forEach(function(currentChar, index, array){
-                    chars.push(
-                        wordContent.appendChild(
-                            charNode = createDomElement({
-                                class: s.charClass, 
-                                content: currentChar,
-                                nodeName: 'div',
-                                data: {
-                                    // true if its the last character in the word 
-                                    last : (splitLines && !splitWords) && index === array.length - 1,
-                                }
-                            })
-                        ) 
-                    )
-                });
-            }
-            // 3. NOT splitting into characters... 
-=======
-
-
-    /** Create a DOM Element with the specified attributes and content.
-     * Same as createHtmlElement() except it returns a DOM node instead of HTML string.
-     * @param: attributes (object) :
-     *   @param: class: (string) one or more class names
-     *   @param: style: (string) string of css styles
-     *   @param: nodeName: (string) the type of element
-     *   @param: content: (element node | array of elements | string)
-     *   @param: data: (object) attach custom data attributes to the element.
-     *     Define as key value pairs {dataName:'value'}
-     * @returns: Element Node
+    /**
+     * Associates arbitrary data with DOM nodes or other objects.
+     * (shortened version of jquery's data method)
+     * @param element object - the element for which data is being set or retrieved.
+     * @param key string (optional) - the name of the data property to set or retrieve.
+     * @param value mixed (optional) - Sets the value of the specified key. any type of data.
      */
-    function createDomElement( attributes ) {
-        // Let a = attributes;
-        var a          = attributes || {},
-            content    = a.content,
-            data       = a.data,
-            node       = document.createElement( a.nodeName || _defaults.nodeName );
-        // 1. Set the class, style, and data.
-        node.className = (( a[ 'class' ] || '') + ' ' + _defaults.splitClass).trim();
-        a.style && (node.style.cssText = a.style);
-        type( data ) === 'object' && Object.keys( data ).forEach( function ( prop ) {
-            node.dataset[ prop ] = data[ prop ];
-        } )
-        // If content was passed in, determine how to insert it
-        switch ( type( content ) ) {
-            // if its a single node, append it to the element
-            case "object" :
-                isNode( content ) && node.appendChild( content );
-                break;
-            // if its an array of elements, interate over array and append each element
-            case "array" :
-                content.forEach( function ( element ) {
-                    isNode( element ) && node.appendChild( element );
-                } );
-                break;
-            // if its a string, insert it as HTML
-            case "string" :
-                node.innerHTML = content;
+    function Data( element, key, value ) {
+      var data = {}, id;
+
+      if ( isObject( element ) ) {
+        id   = element[ expando ] || ( element[ expando ] = ++ uid );
+        data = cache[ id ] || ( cache[ id ] = {} );
+      }
+      // Get data
+      if ( value === undefined ) {
+        if ( key === undefined ) {
+          return data; // if no key or value is given, return the data store object
         }
-        return node;
+        return data[ key ];
+      }
+      // Set data
+      else if ( key !== undefined ) {
+        data[ key ] = value;
+        return value;
+      }
     }
 
+    // Remove all associated with the given element
+    function RemoveData( element ) {
+      var id = element && element[ expando ];
+      if ( id ) {
+        delete element[ id ]; // remove the id property from the element
+        delete cache[ id ]; // delete the data store for the element from the cache
+      }
+    }
 
-    /****************************************
-     - Internal Functions -
-     ***************************************/
-
-    /** Creates an array of the target elements for a splitType call.
-     * Elements can be passed into splitType() in several different forms:
-     * a) single DOM element; b) nodelist; c) jquery/zepto object; d) array; e) selector string;
-     * this method takes those various formats and converts them into a plain array of DOM elements.
-     * @param: elements: any of the formats listed above
-     * @returns: an array of DOM nodes representing each of the target elements
+    /**
+     * Create element with attributes
+     * @param name {string} The name of the element to create
+     * @param attributes {object} (optional) any html attribute, plus several DOM properties:
+     * innerHTML, textContent, children (chilren takes an array and child nodes)
+     * @returns elem
      */
-    function _sanitizeElements( elements ) {
-        var elementsArray = [];
-        // 1. If elements is a selector string...
-        // its its an ID, use getElementById to search for a single element (faster)
-        // Otherwise, use querySelectorAll to find a set of matched elements
-        if ( typeof elements === "string" ) {
-            var selector = elements.trim();
-            if ( selector.split( ' ' ).length === 1 && selector.indexOf( ',' ) > - 1
-                && selector.indexOf( '>' ) > - 1 && selector.charAt( 0 ) === '#' ) {
-                elements = document.getElementById( selector.substring( 1 ) )
-            } else {
-                elements = document.querySelectorAll( selector );
-            }
-        }
-        // If elements is an array, nodelist, or jquery object...
-        // flatten it and convert it to a plain array of DOM elements
-        if ( isArraylike( elements ) ) {
-            var len = elements.length;
-            for ( var i = 0; i < len; i ++ ) {
-                if ( isArraylike( elements[ i ] ) ) {
-                    for ( var j = 0, len2 = elements[ i ].length; j < len2; j ++ ) {
-                        isNode( elements[ i ][ j ] ) && elementsArray.push( elements[ i ][ j ] )
-                    }
-                } else {
-                    isNode( elements[ i ] ) && elementsArray.push( elements[ i ] );
-                }
-            }
-            // If elements is single element...
-            // just wrap it an array so we can use iteration methods
-        } else if ( isNode( elements ) ) {
-            elementsArray = [ elements ];
-        }
-        return elementsArray;
-    }
+    function createElement( name, attributes ) {
+      var elem = document.createElement( name );
 
-    /** Splits the text content of a single element according to the settings for that instance.
-     * @param: element (DOM Node):  the target element for the split operation
-     * @this: refers to the splitType instance
-     */
-    function _split( element, index ) {
-        var data                          = this._SPLIT,
-            s                             = data.settings,
-            // Define Variables
-            splitLines                    = s.splitLines,
-            splitWords                    = s.splitWords,
-            splitChars                    = s.splitChars,
-            isAbsolute                    = s.isAbsolute,
-            lines = [], words = [], chars = [],
-            textContent                   = element.textContent.replace( /\s+/g, ' ' ).trim(),
-            splitText                     = fragment(),
-            wordContent, word, charNode;
-
-        // 1. Iterate over each word of text
-        textContent.split( ' ' ).forEach( function ( currentWord, index ) {
-            // 2. If splitting text into characters...
-            if ( splitChars ) {
-                // Let wordContent be a doc fragment to hold the wrapped character elements for this word
-                wordContent = fragment();
-                // Iterate over each character of text in the current word.
-                // Wrap the character in a new DOM element.
-                // Append the element to wordContent.
-                // Push the element to the chars array.
-                currentWord.split( '' ).forEach( function ( currentChar, index, array ) {
-                    chars.push(
-                        wordContent.appendChild(
-                            charNode = createDomElement( {
-                                class    : s.charClass,
-                                content  : currentChar,
-                                nodeName : 'div',
-                                data     : {
-                                    // true if its the last character in the word
-                                    last : (splitLines && ! splitWords) && index === array.length - 1,
-                                }
-                            } )
-                        )
-                    )
-                } );
-            }
-            // 3. NOT splitting into characters...
->>>>>>> master
-            else {
-                //  Let wordContent be a textNode containing the current word text
-                wordContent = text( currentWord );
-            }
-<<<<<<< HEAD
-            // 4. If splitting text into words... 
-            if( splitWords || splitLines) { 
-                // wrap wordContent in a new DOM element 
-                // Let word be the DOM element that contains wordContent.
-                word = createDomElement({
-                    class: s.wordClass, 
-                    content: wordContent,
-                });
-            // 5. NOT splitting into words 
-            } else {
-                // proceed without wrapping wordContent in an element. 
-                // Let word be equal to wordContent 
-                word = wordContent;  
-            }
-            // append the word to splitText (followed by a space). 
-            // Push it to words array if splitting text into words or lines. 
-            splitText.appendChild( word ); 
-            splitText.appendChild( space() ); 
-            if ( splitWords || splitLines ) {
-                words.push(word); 
-            }
-    }, this); // END OF LOOP 
-
-    // Empty the target element. Append splitText document fragement
-    element.innerHTML = ''; 
-    element.appendChild(splitText); 
-    
-    // Push the words and characters for this element to allChars and allWords. 
-    data.allWords = splitWords ? data.allWords.concat(words) : []; 
-    data.allChars = splitChars ? data.allChars.concat(chars) : []; 
-    
-    // Now move on to splitting text into lines, or return. 
-    if (!splitLines && !isAbsolute) {
-        return; 
-    }
-    if(splitLines) {
-        lines = _splitLines.call(this, element, words, chars); 
-        words = splitWords ? words : []; 
-    }
-
-    if( isAbsolute ) {
-        _setPosition.call(this, element, lines, words, chars)
-    }
-    
-}
-/** 3. Split Lines
-  * Detects where natural line breaks (line wraps) occur in text, then wraps each in its own HTML element. 
-  * @param: element (DOM Node)
-  * @returns: lines (an array of all split line elements); 
-  * @this: refers to the SplitType instance 
-  */
-function _splitLines( element, words, chars ) {
-    var data = this._SPLIT,
-        s = data.settings, 
-        splitLines = s.splitLines, 
-        splitWords = s.splitWords, 
-        splitChars = s.splitChars,
-        // Variables 
-        lines = [],
-        currentLine = [],
-        lineOffsetY = -999,
-        offsetY, 
-        splitText = fragment(); 
-    // Iterate over words and detect where natural line breaks occur in the text. 
-    words.forEach(function(wordNode) {
-        offsetY = wordNode.offsetTop;
-        if( offsetY !== lineOffsetY ) {
-            currentLine = []; 
-            lines.push(currentLine); 
-            lineOffsetY = offsetY;
-        }
-        currentLine.push( wordNode ); 
-    }, this)
-
-    // Iterate over the array of lines, create a wrapper element for each one
-    lines.forEach(function(currentLine, index) {
-        var lineNode = createDomElement({
-            class: s.lineClass
-        });
-        // loop over the array of word elements in the current line.
-        // if splitting text in words, just append each node to the line wrapper
-        // If not, append the character nodes or the plain text (if we are only splitting text into lines).
-        currentLine.forEach(function (wordNode, i) {
-            var word; 
-            if( splitWords ) {
-                word = wordNode; 
-            }
-            else if (splitChars) {
-                word = fragment(); 
-                [].slice.call( wordNode.children ).forEach(function(charNode) {
-                    word.appendChild( charNode ); 
-                })
-            }
-            else {
-                word = text(wordNode.textContent); 
-            }
-            // Append the word to the line element, followed a space. 
-            lineNode.appendChild( word ); 
-            lineNode.appendChild( space() ); 
-        })
-        // Append each line element to splitText (doc fragment)
-        splitText.appendChild( lineNode ); 
-        data.allLines.push( lineNode ); 
-        lines.splice(index, 1, lineNode); 
-    }, this); 
-    // Empty The target Element, Then append spliText
-    while ( element.firstChild ) {
-      element.removeChild( element.firstChild );
-    }
-    element.appendChild( splitText ); 
-    return lines; 
-}
-/** Absolute position 
- * Set all split lines, words and characters to absolute position
- */
-function _setPosition(element, lines, words, chars) {
-    var data = this._SPLIT,
-        s = data.settings, 
-        splitLines = s.splitLines, 
-        splitWords = s.splitWords, 
-        splitChars = s.splitChars,
-        lineHeight = 0,
-        elHeight = element.offsetHeight, 
-        elWidth = element.offsetWidth,
-        nodes = [].concat(lines, words, chars),
-        len = nodes.length, 
-        s = window.getComputedStyle(element),
-        i;
-    element.style.position = s.position === 'static' ? 'relative' : s.position; 
-    element.style.height = elHeight + 'px'; 
-    element.style.width = elWidth + 2 + 'px';
-    
-    for (i = 0; i < len; i++) {
-        nodes[i].pos = position(nodes[i]); 
-    }
-
-    for (i = 0; i < len; i++) {
-        // cache the current element and its style prop
-        var node = nodes[i];
-        node.style.top = node.pos.top + 'px';
-        node.style.left= node.pos.left + 'px';
-        node.style.height= node.pos.height + 'px';  
-        node.style.width= node.pos.width +  'px'; 
-        node.style.position = 'absolute'; 
-    }
-}
-// Add some global styles to the page. These apply to all split nodes
-var sheet = styleSheet(); 
-addCSSRule(sheet, '.is-splitting', 'visibility: hidden; position: absolute;');
-addCSSRule(sheet, '.split-item', 'display: inline-block; position: relative;');
-
-/*********************************************
-  SplitType Constructor
- *********************************************/ 
-function SplitType (elements, options) {
-    // Abort if SplitType was called without new
-    if(!this instanceof SplitType) return; 
-    var data = this._SPLIT =  {
-        settings: {}, 
-        splitNodes : [], 
-        elements : [],
-        allLines : [],
-        allWords : [],
-        allChars : [],
-        originals : []
-    };
-    data.settings = extend(_defaults, options);
-    data.elements = _sanitizeElements( elements ); 
-    data.elements.forEach(function(element, i) {
-        data.originals[i] = element.innerHTML; 
-    });
-    
-    this.split(); 
-}
-/*********************************************
-  PUBLIC PROPERTIES AND METHODS 
- *********************************************/ 
- SplitType.prototype = {
-    /** Split 
-        * Initiates the text splitting process. It gets called automatically when new splitType 
-        * instance is created. But it can also be called manually to re-split the text in an instance. 
-        * New options can be passed into split() each time its called. 
-        * @param: newOptions (object): modifies the settings for the splitType instance
-        * @this: refers to the splitType instance
-        */ 
-    split: function( newOptions ) {
-        var data = this._SPLIT, 
-        s = data.settings, 
-        elements = data.elements,
-        // cache vertical scroll position before splitting 
-        // it will change when elements are removed from doc flow
-        scrollPos = [ window.scrollX, window.scrollY ];
-        // Empty the arrays of split elements before proceeding 
-        data.allLines.length = data.allWords.length = data.allChars.length = 0; 
-        
-        // If new options were passed in, update the settings for this instance 
-        data.settings = newOptions ? extend(data.settings, newOptions) : data.settings; 
-
-        // add "is-splitting" class to each target element before starting the process. 
-        // This temporarily hides the parent element and removes it from document flow. 
-        elements.forEach(function(element) {
-            element.parentElement.classList.add('is-splitting'); 
-        })
-
-        // split the text in each of the target elements. n
-        elements.forEach(function(element, index) {
-            _split.call( this, element ) ; 
-        }, this)
-
-        // Remove the 'is-splitting' class from all elements once the process is complete.
-        elements.forEach(function(element) {
-            element.parentElement.classList.remove('is-splitting');
-        })
-        // Set scroll position to cached value.
-        window.scrollTo(scrollPos[0], scrollPos[1]); 
-        return this;  
-    },
-    /** Revert:
-      * Removes the HTML elements created by splitType and reverts 
-        * the elements back to thier original content
-        * @this: refers to the splitType instance
-        */ 
-    revert: function() {
-        var data = this._SPLIT; 
-        // Empty the arrays of split items
-        // Remove split text from target elements and restore original content
-        data.allLines.length = data.allWords.length = data.allChars.length = 0;     
-        data.elements.forEach(function(element, i) {
-            element.innerHTML = data.originals[i]; 
-        })
-    },
-    /** lines
-        * Returns an array of elements for each lines in the splitType instance. 
-        */  
-    get lines() { return this._SPLIT.allLines }, 
-    /** words
-        * Returns an array of elements for each words in the splitType instance. 
-        */  
-    get words() { return this._SPLIT.allWords },
-    /** chars
-        * Returns an array of elements for each characters in the splitType instance. 
-        */
-    get chars() { return this._SPLIT.allChars }
-}
-=======
-            // 4. If splitting text into words...
-            if ( splitWords || splitLines ) {
-                // wrap wordContent in a new DOM element
-                // Let word be the DOM element that contains wordContent.
-                word = createDomElement( {
-                    class   : s.wordClass,
-                    content : wordContent,
-                } );
-                // 5. NOT splitting into words
-            } else {
-                // proceed without wrapping wordContent in an element.
-                // Let word be equal to wordContent
-                word = wordContent;
-            }
-            // append the word to splitText (followed by a space).
-            // Push it to words array if splitting text into words or lines.
-            splitText.appendChild( word );
-            splitText.appendChild( space() );
-            if ( splitWords || splitLines ) {
-                words.push( word );
-            }
-        }, this ); // END OF LOOP
-
-        // Empty the target element. Append splitText document fragement
-        element.innerHTML = '';
-        element.appendChild( splitText );
-
-        // Push the words and characters for this element to allChars and allWords.
-        data.allWords = splitWords ? data.allWords.concat( words ) : [];
-        data.allChars = splitChars ? data.allChars.concat( chars ) : [];
-
-        // Now move on to splitting text into lines, or return.
-        if ( ! splitLines && ! isAbsolute ) {
-            return;
-        }
-        if ( splitLines ) {
-            lines = _splitLines.call( this, element, words, chars );
-            words = splitWords ? words : [];
-        }
-
-        if ( isAbsolute ) {
-            _setPosition.call( this, element, lines, words, chars )
-        }
-
-    }
-
-    /** 3. Split Lines
-     * Detects where natural line breaks (line wraps) occur in text, then wraps each in its own HTML element.
-     * @param: element (DOM Node)
-     * @returns: lines (an array of all split line elements);
-     * @this: refers to the SplitType instance
-     */
-    function _splitLines( element, words, chars ) {
-        var data        = this._SPLIT,
-            s           = data.settings,
-            splitLines  = s.splitLines,
-            splitWords  = s.splitWords,
-            splitChars  = s.splitChars,
-            // Variables
-            lines       = [],
-            currentLine = [],
-            lineOffsetY = - 999,
-            offsetY,
-            splitText   = fragment();
-        // Iterate over words and detect where natural line breaks occur in the text.
-        words.forEach( function ( wordNode ) {
-            offsetY = wordNode.offsetTop;
-            if ( offsetY !== lineOffsetY ) {
-                currentLine = [];
-                lines.push( currentLine );
-                lineOffsetY = offsetY;
-            }
-            currentLine.push( wordNode );
-        }, this )
-
-        // Iterate over the array of lines, create a wrapper element for each one
-        lines.forEach( function ( currentLine, index ) {
-            var lineNode = createDomElement( {
-                class : s.lineClass
+      if ( attributes === undefined ) {
+        return elem;
+      }
+      // Handle attributes
+      forEach( attributes, function ( name ) {
+        var value = attributes[ name ];
+        if ( value === null ) return;
+        switch ( name ) {
+          // 'text' sets the text content
+          case 'textContent':
+            elem.textContent = value;
+            break;
+          // 'html' sets the innerHTML
+          case 'innerHTML':
+            elem.innerHTML = value;
+            break;
+          // 'children' one or more child nodes to insert into the element - can be single node, nodelist, array
+          case 'children':
+            forEach( value, function ( child ) {
+              isNode( child ) && elem.appendChild( child )
             } );
-            // loop over the array of word elements in the current line.
-            // if splitting text in words, just append each node to the line wrapper
-            // If not, append the character nodes or the plain text (if we are only splitting text into lines).
-            currentLine.forEach( function ( wordNode, i ) {
-                var word;
-                if ( splitWords ) {
-                    word = wordNode;
-                }
-                else if ( splitChars ) {
-                    word = fragment();
-                    [].slice.call( wordNode.children ).forEach( function ( charNode ) {
-                        word.appendChild( charNode );
-                    } )
-                }
-                else {
-                    word = text( wordNode.textContent );
-                }
-                // Append the word to the line element, followed a space.
-                lineNode.appendChild( word );
-                lineNode.appendChild( space() );
-            } )
-            // Append each line element to splitText (doc fragment)
-            splitText.appendChild( lineNode );
-            data.allLines.push( lineNode );
-            lines.splice( index, 1, lineNode );
-        }, this );
-        // Empty The target Element, Then append spliText
-        while ( element.firstChild ) {
-            element.removeChild( element.firstChild );
+            break;
+          // handle standard attributes
+          default:
+            elem.setAttribute( name, value );
         }
-        element.appendChild( splitText );
-        return lines;
+      } )
+      return elem;
     }
 
-    /** Absolute position
-     * Set all split lines, words and characters to absolute position
+    /**
+     * Handles the target elements parameter.
+     * Target elements can be passed into splitType in several different forms:
+     * Selector string, element, array/nodelist/jquery object, deep array
+     * This method converts those different formats into a plain array of elements.
+     * @returns:  {array}  the target elements
      */
-    function _setPosition( element, lines, words, chars ) {
-        var data               = this._SPLIT,
-            s                  = data.settings,
-            splitLines         = s.splitLines,
-            splitWords         = s.splitWords,
-            splitChars         = s.splitChars,
-            lineHeight         = 0,
-            elHeight           = element.offsetHeight,
-            elWidth            = element.offsetWidth,
-            nodes              = [].concat( lines, words, chars ),
-            len                = nodes.length,
-            s                  = window.getComputedStyle( element ),
-            i;
-        element.style.position = s.position === 'static' ? 'relative' : s.position;
-        element.style.height   = elHeight + 'px';
-        element.style.width    = elWidth + 2 + 'px';
+    function _processElements( elements ) {
+      var elementsArray = [],
+          selector, isId, ID, len, len2, i, k;
+      // A. If elements is a selector string...
+      // ==> If its a single ID selector, use getElementById (super fast)
+      // ==> otherwise use querySelectorAll to find the set of matched elements.
+      if ( isString( elements ) ) {
+        selector = elements.trim();
+        isId     = selector[ 0 ] === '#' && ! /[^\w]/.test( ID = selector.slice( 1 ) );
+        elements = isId ? document.getElementById( ID ) : document.querySelectorAll( selector );
+      }
+      // B. if we're certain that elements is a single node or nodelist,
+      // convert it to an array and return here.
+      if ( selector || isNode( elements ) ) {
+        return isNode( elements ) ? [ elements ] : slice.call( elements );
+      }
 
-        for ( i = 0; i < len; i ++ ) {
-            nodes[ i ].pos = position( nodes[ i ] );
+      // if elements is an array or jquery/object...
+      // flatten it if necessary, remove any non-element values, and return the result.
+      if ( isArraylike( elements ) ) {
+        for ( i = 0, len = elements.length; i < len; i ++ ) {
+          if ( isArraylike( elements[ i ] ) ) {
+            for ( k = 0, len2 = elements[ i ].length; k < len2; k ++ ) {
+              if ( isNode( elements[ i ][ k ] ) ) {
+                elementsArray.push( elements[ i ][ k ] );
+              }
+            }
+          } else if ( isNode( elements[ i ] ) ) {
+            elementsArray.push( elements[ i ] );
+          }
         }
-
-        for ( i = 0; i < len; i ++ ) {
-            // cache the current element and its style prop
-            var node            = nodes[ i ];
-            node.style.top      = node.pos.top + 'px';
-            node.style.left     = node.pos.left + 'px';
-            node.style.height   = node.pos.height + 'px';
-            node.style.width    = node.pos.width + 'px';
-            node.style.position = 'absolute';
-        }
+      }
+      return elementsArray;
     }
 
-// Add some global styles to the page. These apply to all split nodes
-    var sheet = styleSheet();
-    addCSSRule( sheet, '.is-splitting', 'visibility: hidden; position: absolute;' );
-    addCSSRule( sheet, '.split-item', 'display: inline-block; position: relative;' );
+    /**
+     * Splits the text content of a single element using to the settings for the SplitType instance.
+     * By "split", we mean the process of breaking down plain text into separate components
+     * (lines, words, and characters) and wrapping each one in its own element.
+     * There are three possible split types: lines, words, and characters. Each one is optional,
+     * so text can be split into any combination of the three types.
+     *
+     * 'this' refers to the splitType instance from which this function was called.
+     * @param element node - the target element for the split operation.
+     */
+    function _split( element ) {
+      // Let o equal the settings for this SplitTypes instance.
+      var settings   = this.settings,
+          // the tag name for split text nodes
+          TAG_NAME   = settings.tagName,
+          // A unique string to tempNodeorarily replace <br> tags
+          BR_SYMBOL  = 'B' + (new Date() * 1) + 'R',
+          // The plain text content of the target element
+          TEXT_CONTENT,
+          // the split types to use (ie lines, words, characters)
+          types      = settings.split,
+          // (boolean) true if text is being split into lines
+          splitLines = types.indexOf( 'lines' ) !== - 1,
+          // (boolean) true if text is being split into words
+          splitWords = types.indexOf( 'words' ) !== - 1,
+          // (boolean) true if text is being split into characters
+          splitChars = types.indexOf( 'chars' ) !== - 1,
+          // (boolean) true if position is set to absolute
+          isAbsolute = settings.position === 'absolute' || settings.absolute === true,
+          // An empty element node
+          tempNode   = createElement( 'div' ),
+          // An array of the split lines in the current element
+          lineNodes  = [],
+          // An array of the split words in the current element
+          wordNodes  = [],
+          // An array of the split characters in the current element
+          charNodes  = [],
+          lineNode,
+          wordNode,
+          charNode,
+          splitText;
 
-    /*********************************************
-     SplitType Constructor
-     *********************************************/
-    function SplitType( elements, options ) {
-        // Abort if SplitType was called without new
-        if ( ! this instanceof SplitType ) return;
-        var data = this._SPLIT = {
-            settings   : {},
-            splitNodes : [],
-            elements   : [],
-            allLines   : [],
-            allWords   : [],
-            allChars   : [],
-            originals  : []
+
+      /*---------------------------------------
+       SPLIT TEXT INTO WORDS AND CHARACTERS
+       -----------------------------------------*/
+
+      // 1. splitText is a wrapper to hold the HTML structure while its being built.
+      splitText = splitLines ? createElement( 'div' ) : createFragment();
+
+      // 2. Get the element's text content.
+      //    temporarily replace <br> tags with a unique string before extracting text.
+      tempNode.innerHTML = element.innerHTML.replace( /<br\s*\/?>/g, (' ' + BR_SYMBOL + ' ') );
+      TEXT_CONTENT       = tempNode.textContent.replace( /\s+/g, ' ' ).trim(); // remove extra white space
+
+      // 3. Iterate over each word in the text.
+      //    Create an array of wrapped the word elements (wordNodes).
+      //    WORD (string) refers to the current word in the loop.
+      wordNodes = TEXT_CONTENT.split( ' ' ).map( function ( WORD ) {
+
+        // a. If the current word is a symbol representing a br tag,
+        //    append a <br> tag to splitText and continue to the next word
+        if ( WORD === BR_SYMBOL ) {
+          splitText.appendChild( createElement( 'br' ) );
+          return null; // br tag is not added to the array of wordNodes
+        }
+
+        // b. If Splitting Text Into Characters...
+        if ( splitChars ) {
+
+          // i. Iterate through the characters in the current word
+          //    CHAR (string) refers to the current character in the loop
+          //    currentWordCharNodes is array of the wrapped character elements in this word
+          var currentWordCharNodes = WORD.split( '' ).map( function ( CHAR ) {
+            // Create an element to wrap the current character.
+            charNode = createElement( TAG_NAME, {
+              class       : settings.charClass + ' ' + settings.splitClass,
+              style       : "display: inline-block;",
+              textContent : CHAR
+            } );
+            return charNode;
+          } );
+
+          // ii. push the character nodes for this word to charNodes
+          push.apply( charNodes, currentWordCharNodes );
+
+        } // END IF;
+
+        // c. If Splitting Text Into Words...
+        if ( splitWords || splitLines ) {
+
+          // i. Let wordNode be an element to wrap the current word.
+          wordNode = createElement( TAG_NAME, {
+            class       : ( settings.wordClass + ' ' + settings.splitClass ),
+            style       : 'display: inline-block; position:' + ( splitWords ? 'relative' : 'static;' ),
+            // It contains the character nodes, or the word (plain text).
+            children    : splitChars ? currentWordCharNodes : null,
+            textContent : ! splitChars ? WORD : null
+          } );
+
+          // ii. Append wordNode to splitText.
+          splitText.appendChild( wordNode );
+
+        } // END IF;
+
+        // d. If NOT Splitting Words...
+        else {
+          // i. Append the character nodes directly to splitText.
+          forEach( currentWordCharNodes, function ( charNode ) {
+            splitText.appendChild( charNode );
+          } )
+        }
+
+        // e. Add a space after the word.
+        splitText.appendChild( createTextNode( ' ' ) );
+
+        return wordNode;
+
+      }, this ).filter( function ( el ) {
+        return el
+      } ); // remove any undefined/null entries from the array
+      // end forEach
+
+      // 4. Now remove the original contents of the target element and insert the split text.
+      element.innerHTML = '';
+      element.appendChild( splitText );
+
+      // 5. Add the split words/chars in this element to the array of all split words/chars.
+      push.apply( this.words, wordNodes );
+      push.apply( this.chars, charNodes );
+
+      // STOP HERE If not splitting text into lines or using absolute positioning
+      if ( ! isAbsolute && ! splitLines ) {
+        return;
+      }
+
+      /*---------------------------------
+       GET STYLES AND POSITIONS
+       ----------------------------------*/
+
+      // There is no built-in way to detect natural line breaks in text (when a block of text
+      // wraps to fit its container). So in order to split text into lines, we have to detect
+      // line breaks by checking the top offset of words. This is why text was split into words
+      // first. To apply absolute positioning, its also necessary to record the size and position
+      // of every split node (lines, words, characters).
+
+      // To consolidate DOM getting/settings, this is all done at the same time, before actually
+      // splitting text into lines, which involves restructuring the DOM again.
+
+      var lines = [],
+          currentLine,
+          lineOffsetY,
+          lineHeight,
+          contentBox,
+          elementHeight,
+          elementWidth,
+          nodes,
+          parent,
+          nextsib,
+          cs,
+          align;
+
+      // nodes is a live HTML collection of the nodes in this element
+      nodes = Data( element ).nodes = element.getElementsByTagName( TAG_NAME );
+
+      // Cache the element's parent and next sibling (for DOM removal).
+      parent  = element.parentElement;
+      nextsib = element.nextElementSibling;
+
+      // get the computed style object for the element
+      cs    = window.getComputedStyle( element );
+      align = cs.textAlign;
+
+      // If using absolute position...
+      if ( isAbsolute ) {
+
+        // Let contentBox be an object containing the width and offset position of the element's
+        // content box (the area inside padding box). This is needed (for absolute positioning)
+        // to set the width and position of line elements, which have not been created yet.
+        contentBox = {
+          left  : splitText.offsetLeft,
+          top   : splitText.offsetTop,
+          width : splitText.offsetWidth
         };
-        data.settings = extend( _defaults, options );
-        data.elements = _sanitizeElements( elements );
-        data.elements.forEach( function ( element, i ) {
-            data.originals[ i ] = element.innerHTML;
+
+        // Let elementWidth and elementHeight equal the actual width/height of the element.
+        // Also check if the element has inline height or width styles already set.
+        // If it does, cache those values for later.
+        elementWidth  = element.offsetWidth;
+        elementHeight = element.offsetHeight;
+
+        Data( element ).cssWidth  = element.style.width;
+        Data( element ).cssHeight = element.style.height;
+      }
+
+      // 6. Iterate over every split text node
+      forEach( nodes, function ( node ) {
+        if ( node === splitText ) return;
+
+        var isWord = node.parentElement === splitText;
+        var wordOffsetY;
+        // a. Detect line breaks by checking the top offset of word nodes.
+        //    For each line, create an array (line) containing the words in that line.
+        if ( splitLines && isWord ) {
+          // wordOffsetY is the top offset of the current word.
+          wordOffsetY = Data( node ).top = node.offsetTop;
+
+          // If wordOffsetY is different than the value of lineOffsetY...
+          // Then this word is the beginning of a new line.
+          // Set lineOffsetY to value of wordOffsetY.
+          // Create a new array (line) to hold the words in this line.
+          if ( wordOffsetY !== lineOffsetY ) {
+            lineOffsetY = wordOffsetY;
+            lines.push( currentLine = [] );
+          }
+
+          // Add the current word node to the line array
+          currentLine.push( node );
+        }
+
+        // b. Get the size and position of all split text nodes.
+        if ( isAbsolute ) {
+          // The values are stored using the data method
+          // All split nodes have the same height (lineHeight). So its only retrieved once.
+          // If offset top has already been cached (step 11 a) use the stored value.
+          Data( node ).top    = wordOffsetY || node.offsetTop;
+          Data( node ).left   = node.offsetLeft;
+          Data( node ).width  = node.offsetWidth;
+          Data( node ).height = lineHeight || ( lineHeight = node.offsetHeight );
+        }
+
+      } ) // END LOOP
+
+      // 7. Remove the element from the DOM
+      parent.removeChild( element );
+
+
+      /*--------------------------------
+       SPLIT LINES
+       ----------------------------------*/
+
+      if ( splitLines ) {
+
+        // 8. Let splitText be a new document createFragment to hold the HTML structure.
+        splitText = createFragment();
+
+        // 9. Iterate over the arrays in lines (see 11 b)
+        //     Let line be the array of words in the current line.
+        //     Return an array of the wrapped line elements (lineNodes)
+        lineNodes = lines.map( function ( line ) {
+
+          // a. Create a new element (lineNode) to wrap the current line.
+          //    Append lineNode to splitText.
+          splitText.appendChild(
+            lineNode = createElement( TAG_NAME, {
+              class : settings.lineClass + ' ' + settings.splitClass,
+              style : 'display: block; text-align:' + align + '; width: 100%;'
+            } )
+          );
+
+          // b. store size/position values for the line element.
+          if ( isAbsolute ) {
+            Data( lineNode ).type   = 'line';
+            Data( lineNode ).top    = Data( line[ 0 ] ).top; // the offset top of the first word in the line
+            Data( lineNode ).height = lineHeight;
+          }
+
+          // c. Iterate over the word elements in the current line.
+          //    wordNode refers to the current word in the loop.
+          forEach( line, function ( wordNode ) {
+
+            // i. If splitting text into words,
+            // just append wordNode to the line element.
+            if ( splitWords ) {
+              lineNode.appendChild( wordNode );
+
+              // ii. If NOT splitting into words...
+              //     if splitting characters append the char nodes to the line element
+            } else if ( splitChars ) {
+              slice.call( wordNode.children ).forEach( function ( charNode ) {
+                lineNode.appendChild( charNode );
+              } )
+            }
+            // iii. If NOT splitting into words OR characters...
+            //      append the plain text content of the word to the line element
+            else {
+              lineNode.appendChild( createTextNode( wordNode.textContent ) )
+            }
+            // iV. add a space after the word
+            lineNode.appendChild( createTextNode( ' ' ) );
+          } ) // END LOOP
+
+          return lineNode;
+        } ) // END LOOP
+
+        // 10. Insert the new splitText
+        element.replaceChild( splitText, element.firstChild );
+
+        // 11. Add the split line elements to the array of all split lines
+        push.apply( this.lines, lineNodes );
+      }
+
+      /*---------------------------------
+       SET ABSOLUTE POSITION
+       ----------------------------------*/
+
+      // Apply absolute positioning to all split text elements (lines, words, and characters).
+      // The size and relative position of split nodes has already been recorded. Now we use those
+      // values to set each element to absolute position. However, positions were logged before
+      // text was split into lines (step 13 - 15). So some values need to be recalcated to account
+      // for the modified DOM structure.
+
+      if ( isAbsolute ) {
+
+        // 12. Set the width/height of the parent element, so it does not collapse when its
+        //     child nodes are set to absolute position.
+        element.style.width  = element.style.width || elementWidth + 'px';
+        element.style.height = elementHeight + 'px';
+
+        // 13. Iterate over all split nodes.
+        //     Let node be current node in the loop
+        forEach( nodes, function ( node ) {
+
+          // a. Let isLine be true if the current node is a line element
+          //    Let isLineChild be true if the current node is a direct child of a line element.
+          var isLine      = Data( node ).type === 'line';
+          var isLineChild = ! isLine && Data( node.parentElement ).type === 'line';
+
+          // b. Set the top position of the current node.
+          //    If its a line node, we use the top offset of its first child (see step 14 b)
+          //    If its the child of line node, then its top offset is zero
+          node.style.top = isLineChild ? 0 : Data( node ).top + 'px';
+
+          // c. Set the left position of the current node.
+          //    If its a line node, this this is equal to the left offset of contentBox (step 9).
+          //    If its the child of a line node, the cached valued must be recalculated so its
+          //    relative to the line node (which didn't exist when value was initially checked).
+          // NOTE: the value is recalculated without querying the DOM again
+          node.style.left = isLine ? (contentBox.left + 'px') :
+          ( isLineChild ? ( Data( node ).left - contentBox.left ) :
+            Data( node ).left ) + 'px';
+
+          // d. Set the height of the current node to the cached value.
+          node.style.height = Data( node ).height + 'px';
+
+          // e. Set the width of the current node.
+          //    If its a line element, width is equal to the width of the contentBox (see step 9).
+          node.style.width = isLine ? (contentBox.width + 'px') : Data( node ).width + 'px';
+
+          // f. Finally, set the node's position to absolute.
+          node.style.position = 'absolute';
+        } )
+      } // end if;
+
+      // 14. Re-attach the element to the DOM
+      if ( nextsib ) parent.insertBefore( element, nextsib );
+      else parent.appendChild( element );
+
+    } // End Function
+
+    /***************************
+     SplitType Constructor
+     ***************************/
+
+    function SplitType( elements, options ) {
+      // Allow the SplitType constructor to be called without 'new'
+      if ( ! ( this instanceof SplitType ) ) {
+        return new SplitType( elements, options );
+      }
+      this.isSplit  = false;
+      // Merge options with defaults
+      this.settings = extend( _defaults, options );
+      // Prepare target elements
+      this.elements = _processElements( elements );
+
+      if ( this.elements.length ) {
+        // Store the original HTML content of each target element
+        this.originals = this.elements.map( function ( element ) {
+          return ( Data( element ).html = Data( element ).html || element.innerHTML );
         } );
 
+        // Initiate the split operation.
         this.split();
+      }
     }
 
-    /*********************************************
+
+    /*********************************
      PUBLIC PROPERTIES AND METHODS
-     *********************************************/
-    SplitType.prototype = {
-        /** Split
-         * Initiates the text splitting process. It gets called automatically when new splitType
-         * instance is created. But it can also be called manually to re-split the text in an instance.
-         * New options can be passed into split() each time its called.
-         * @param: newOptions (object): modifies the settings for the splitType instance
-         * @this: refers to the splitType instance
-         */
-        split  : function ( newOptions ) {
-            var data             = this._SPLIT,
-                s                = data.settings,
-                elements         = data.elements,
-                // cache vertical scroll position before splitting
-                // it will change when elements are removed from doc flow
-                scrollPos        = [ window.scrollX, window.scrollY ];
-            // Empty the arrays of split elements before proceeding
-            data.allLines.length = data.allWords.length = data.allChars.length = 0;
+     *********************************/
 
-            // If new options were passed in, update the settings for this instance
-            data.settings = newOptions ? extend( data.settings, newOptions ) : data.settings;
+    /**
+     * SplitType.defaults
+     * A public property on the global SplitType object that allows users to access or modify the
+     * default settings. Multiple settings can be changed at once by assigning an object to
+     * SplitType.defaults containing the settings you wish to change. This will merge the new settings
+     * with the internal _defaults object, not overwrite it.
+     * To access the current settings: SplitType.defaults
+     * To modify settings: SplitType.defaults = {setting1: 'new value', setting2: 'new value'}
+     * @public
+     * @static
+     */
+    defineProperty( SplitType, 'defaults', {
+      get : function () {
+        return _defaults;
+      },
+      set : function ( object ) {
+        _defaults = extend( _defaults, object );
+      }
+    } );
 
-            // add "is-splitting" class to each target element before starting the process.
-            // This temporarily hides the parent element and removes it from document flow.
-            elements.forEach( function ( element ) {
-                element.parentElement.classList.add( 'is-splitting' );
-            } )
+    /**
+     * instance.split()
+     * Splits text in the target elements. This method gets called automatically when a new SplitType
+     * instance is created. The method can also be called manually to re-split text with new options.
+     * @param newOptions: (object) modifies the settings for the splitType instance.
+     * @public
+     */
+    SplitType.prototype.split = function split( newOptions ) {
+      // If any of the target elements have already been split,
+      // revert them back to their original content before splitting them.
+      this.revert();
 
-            // split the text in each of the target elements. n
-            elements.forEach( function ( element, index ) {
-                _split.call( this, element );
-            }, this )
+      // Create arrays to hold the split lines, words, and characters for this instance.
+      // These are public properties which can be accessed on the SplitType instance.
+      this.lines = [];
+      this.words = [];
+      this.chars = [];
 
-            // Remove the 'is-splitting' class from all elements once the process is complete.
-            elements.forEach( function ( element ) {
-                element.parentElement.classList.remove( 'is-splitting' );
-            } )
-            // Set scroll position to cached value.
-            window.scrollTo( scrollPos[ 0 ], scrollPos[ 1 ] );
-            return this;
-        },
-        /** Revert:
-         * Removes the HTML elements created by splitType and reverts
-         * the elements back to thier original content
-         * @this: refers to the splitType instance
-         */
-        revert : function () {
-            var data = this._SPLIT;
-            // Empty the arrays of split items
-            // Remove split text from target elements and restore original content
-            data.allLines.length = data.allWords.length = data.allChars.length = 0;
-            data.elements.forEach( function ( element, i ) {
-                element.innerHTML = data.originals[ i ];
-            } )
-        },
-        /** lines
-         * Returns an array of elements for each lines in the splitType instance.
-         */
-        get lines() {
-            return this._SPLIT.allLines
-        },
-        /** words
-         * Returns an array of elements for each words in the splitType instance.
-         */
-        get words() {
-            return this._SPLIT.allWords
-        },
-        /** chars
-         * Returns an array of elements for each characters in the splitType instance.
-         */
-        get chars() {
-            return this._SPLIT.allChars
+      // cache vertical scroll position before splitting
+      var scrollPos = [ window.pageXoffset, window.pageYoffset ];
+
+      // If new options were passed into the split() method, update settings for the instance.
+      if ( newOptions !== undefined ) {
+        this.settings = extend( this.settings, newOptions );
+      }
+
+      // Call the _split function to split the text in each target element
+      forEach( this.elements, function ( element ) {
+        _split.call( this, element );
+        Data( element ).isSplit = true; // Set isSplit to true for this element.
+      }, this );
+
+      // Set isSplit to true for the SplitType instance
+      this.isSplit = true;
+
+      // Set scroll position to cached value.
+      window.scrollTo.apply( window, scrollPos );
+
+      // Clear data Cache
+      forEach( this.elements, function ( element ) {
+        var nodes = Data( element ).nodes || [];
+        for ( var i = 0, len = nodes.length; i < len; i ++ ) {
+          RemoveData( nodes[ i ] );
         }
-    };
->>>>>>> master
-// Returns the SplitType Constructor 
+      } )
+    }
+
+    /**
+     * revert
+     * Reverts the target elements back to their original html content.
+     * @public
+     */
+    SplitType.prototype.revert = function revert() {
+      // Delete the arrays of split text elements from the SplitType instance.
+      // @NOTE: these properties are non-writable, that is why they have to be
+      // deleted instead of just setting their value to null.
+      if ( this.isSplit ) {
+        this.lines = this.words = this.chars = null;
+      }
+
+      // Remove split text from target elements and restore original content
+      forEach( this.elements, function ( elem ) {
+        if ( Data( elem ).isSplit && Data( elem ).html ) {
+          elem.innerHTML    = Data( elem ).html;
+          elem.style.height = Data( elem ).cssHeight || '';
+          elem.style.width  = Data( elem ).cssWidth || '';
+          this.isSplit      = false;
+        }
+      }, this );
+    }
     return SplitType;
-})( window, document );
+  })( window, document )
+} )

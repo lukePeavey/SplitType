@@ -7,7 +7,9 @@
  * @version: 1.0
  * @license MIT
  */
-  // Support module loaders
+
+
+// Support module loaders
 (function ( global, factory ) {
   if ( typeof define === 'function' && define.amd ) {
     define( factory );
@@ -55,15 +57,6 @@
       DEBUG      : false,
     };
 
-    // Read-only settings: splitLines, splitWords, splitChars
-    defineProperty( _defaults, 'DEBUG', {
-      get : function () {
-        return _defaults.DEBUG
-      },
-      set : function ( value ) {
-        DEBUG = _defaults.DEBUG = value;
-      }
-    } );
 
     /***********************
      - Utility Functions -

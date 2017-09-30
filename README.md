@@ -27,16 +27,16 @@ defines how the text will be split up. takes a comma separated list.
 the css positioning used for split text elements 
 choices: 'relative' | 'absolute'
 
-<b>tag</b>:        {string} (default: 'div')<br />
+<b>tagName</b>:        {string} (default: 'div')<br />
 the type of HTML element that split text will be wrapped in
 
-<b>lineClass</b>:   {string} (default: 'split-line')<br />
+<b>lineClass</b>:   {string} (default: 'line')<br />
 the css class that is added to all split lines
 
-<b>wordClass</b>: {string} (default: 'split-word')<br />
+<b>wordClass</b>: {string} (default: 'word')<br />
 the css class added to all split words
 
-<b>charClass</b>: {string} (default: 'split-char')<br />
+<b>charClass</b>: {string} (default: 'char')<br />
 the css class added to all split characters
 
 <b>splitClass</b>:

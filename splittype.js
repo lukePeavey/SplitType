@@ -667,7 +667,7 @@
       this.chars = [];
 
       // cache vertical scroll position before splitting
-      var scrollPos = [ window.pageXoffset, window.pageYoffset ];
+      var scrollPos = [ window.pageXOffset, window.pageYOffset ];
 
       // If new options were passed into the split() method, update settings for the instance.
       if ( newOptions !== undefined ) {

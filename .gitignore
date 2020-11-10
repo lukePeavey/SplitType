@@ -3,8 +3,6 @@
 /es
 /cjs
 /dist
-/__tests__
-/__mocks__
 
 # Examples/docs
 /examples

@@ -1,0 +1,826 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SplitType Matches snapshot with { types: "words, chars" } 1`] = `
+SplitType {
+  "chars": Array [
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      O
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      n
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      e
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      T
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      w
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      T
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      h
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      r
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      e
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      e
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      F
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      u
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      r
+    </div>,
+  ],
+  "elements": Array [
+    <div
+      class="text"
+    >
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          O
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          n
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          e
+        </div>
+      </div>
+       
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          T
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          w
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+      </div>
+    </div>,
+    <div
+      class="text"
+    >
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          T
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          h
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          r
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          e
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          e
+        </div>
+      </div>
+       
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          F
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          u
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          r
+        </div>
+      </div>
+    </div>,
+  ],
+  "isSplit": true,
+  "lines": Array [],
+  "originals": Array [
+    "One Two",
+    "Three Four",
+  ],
+  "settings": Object {
+    "absolute": false,
+    "charClass": "char",
+    "lineClass": "line",
+    "splitClass": "",
+    "tagName": "div",
+    "types": "words, chars",
+    "wordClass": "word",
+  },
+  "words": Array [
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        O
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        n
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        e
+      </div>
+    </div>,
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        T
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        w
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+    </div>,
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        T
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        h
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        r
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        e
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        e
+      </div>
+    </div>,
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        F
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        u
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        r
+      </div>
+    </div>,
+  ],
+}
+`;
+
+exports[`SplitType Matches snapshot with default options 1`] = `
+SplitType {
+  "chars": Array [
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      O
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      n
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      e
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      T
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      w
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      T
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      h
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      r
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      e
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      e
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      F
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      u
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      r
+    </div>,
+  ],
+  "elements": Array [
+    <div
+      class="text"
+    >
+      <div
+        class="line"
+        style="display: block; text-align: ; width: 100%;"
+      >
+        <div
+          class="word"
+          style="display: inline-block; position: relative"
+        >
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            O
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            n
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            e
+          </div>
+        </div>
+         
+        <div
+          class="word"
+          style="display: inline-block; position: relative"
+        >
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            T
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            w
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            o
+          </div>
+        </div>
+      </div>
+    </div>,
+    <div
+      class="text"
+    >
+      <div
+        class="line"
+        style="display: block; text-align: ; width: 100%;"
+      >
+        <div
+          class="word"
+          style="display: inline-block; position: relative"
+        >
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            T
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            h
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            r
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            e
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            e
+          </div>
+        </div>
+         
+        <div
+          class="word"
+          style="display: inline-block; position: relative"
+        >
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            F
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            o
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            u
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            r
+          </div>
+        </div>
+      </div>
+    </div>,
+  ],
+  "isSplit": true,
+  "lines": Array [
+    <div
+      class="line"
+      style="display: block; text-align: ; width: 100%;"
+    >
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          O
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          n
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          e
+        </div>
+      </div>
+       
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          T
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          w
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+      </div>
+    </div>,
+    <div
+      class="line"
+      style="display: block; text-align: ; width: 100%;"
+    >
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          T
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          h
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          r
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          e
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          e
+        </div>
+      </div>
+       
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          F
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          u
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          r
+        </div>
+      </div>
+    </div>,
+  ],
+  "originals": Array [
+    "One Two",
+    "Three Four",
+  ],
+  "settings": Object {
+    "absolute": false,
+    "charClass": "char",
+    "lineClass": "line",
+    "splitClass": "",
+    "tagName": "div",
+    "types": "lines, words, chars",
+    "wordClass": "word",
+  },
+  "words": Array [
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        O
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        n
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        e
+      </div>
+    </div>,
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        T
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        w
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+    </div>,
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        T
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        h
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        r
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        e
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        e
+      </div>
+    </div>,
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        F
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        u
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        r
+      </div>
+    </div>,
+  ],
+}
+`;

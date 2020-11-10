@@ -1,76 +1,150 @@
-## SplitType
+# SplitType
 
-A javascript plugin that "splits" plain text into indivudual lines, words and characters, which can each be animated and styled independly. This makes it easy to create complex typographic animations without the use of canvas.<br>
-Compatible with GSAP and Velocity 
+SplitType is a small javascript library that splits HTML text into elements so that lines, words, and characters can be animated independently. It was inspired by GSAP's SplitText plugin, and can be used with any animation library. 
 
-#### How To Use:  
+## Installation
 
-SplitType attaches a global function to the window object, which can be called at any time to split the text in one or more elements. `SplitType` is a constructor; it returns a new SplitType instance that contains several properties and methods for interacting with the split text. 
+**Yarn/NPM**
 
-It takes two arguments: <br />
-+ elements: the target element(s). This can be a selector string, DOM node, nodelist, jQuery object or array
-+ options: (optional) An object containing custom settings for the splitType call (see below for a list of available options)
+You can install SplitType as a dependency using yarn or npm.
 
-``` js 
-// The basic syntax is:
-var instance = new SplitType( elements, [ options ] ); 
+```SHELL
+yarn add 'split-type'
+```
+```js
+import SplitType from 'split-type'
 ```
 
-SpliType works taking plain text and wrapping each line, word, and character in an element, without modifying the visual appearance or formatting of the text. By default it uses inline-block elements and relative positioning. This allows the split text to still reflow naturally when the viwport is resized. However, its also possible to apply absolute positioning to all split text elements. 
+**CDN**
 
-##### options:
+Or, include the following `<script>` tag to load SplitType from a CDN. In this case, the `SplitType` constructor will be attached to `window` object. 
 
-<b>split</b>: {string} (default: 'lines, words, chars')<br />
-defines how the text will be split up. takes a comma separated list.
-
-<b>position</b>:  {string} (default: 'relative')<br />
-the css positioning used for split text elements 
-choices: 'relative' | 'absolute'
-
-<b>tagName</b>:        {string} (default: 'div')<br />
-the type of HTML element that split text will be wrapped in
-
-<b>lineClass</b>:   {string} (default: 'line')<br />
-the css class that is added to all split lines
-
-<b>wordClass</b>: {string} (default: 'word')<br />
-the css class added to all split words
-
-<b>charClass</b>: {string} (default: 'char')<br />
-the css class added to all split characters
-
-<b>splitClass</b>:
-  {string} (default: '')<br />
-a css class for all split text elements
-
-
-##### Properties And Methods:
-``` js 
-var instance = new SplitType('#some-element');
-// an array of the split lines in the splitType instance (DOM nodes)
-instance.lines 
-// an array of the split words in the splitType instance
-instance.words 
-// an array of the split chars in the splitType instance 
-instance.chars 
-
-// METHODS
-instance.split(options) 
-
-instance.revert() 
+```html
+<!-- Minified UMD bundle -->
+<script src="https://unpkg.com/split-type"></script>
 ```
 
-#### Using splitType with Velocity
+
+## Usage 
+
+`SplitType` splits the text content of the target element(s) using the provided [options](#options). It returns a new `SplitType` instance which provides access to the split text nodes.  Under the hood, it simply wraps each line, word, and/or character in an element without changing the visual appearance of the text. 
+
+**Split Types**
+
+The `types` option lets you specify which units the text will be broken up into. There are three types: lines, words, and characters. You can specify any combination of these types.
+
+```js
+// Splits text into lines, words, characters (default)
+const text = new SplitType('#target')
+// Splits text into words and characters
+const text = new SplitType('#target', { types: 'words, chars' })
+// Splits text into lines
+const text = new SplitType('#target', { types: 'words' }
+```
+
+**Accessing split text nodes**
+
+```js
+// Splits text in element with ID="target"
+const text = new SplitType('#target')
+
+// An array of the all line elements
+console.log(text.lines)
+// An array of all word elements
+console.log(text.words)
+// An array of all character elements
+console.log(text.chars)
+```
+
+**Absolute vs Relative position**
+
+By default, split text nodes are set to relative position and `display:inline-block`. This allows split text to reflow naturally if the container is resized. SplitType also supports absolute position for split text nodes by settings `{absolute: true}`. This can improve performance for animations. But split text will not automatically reflow if the container size changes. To reposition text after browser is resized, you can use the `split` method to re-split text. 
+
+```js
+// Splits text using absolute position for split text elements
+const text = new SplitType('#target', { absolute: true })
+```
+
+## API Reference 
+
+### SplitType(target, [options])
+
+### Arguments
+
+#### `target` 
+
+The target elements for the SplitType call. This can be a selector, a single element, or an ArrayLike object (ie NodeList, jQuery Object, etc). SplitType does not currently support nested HTML inside target elements. So the elements passed to `SplitType` should directly contain the text that you wish to split. 
+
+#### `options`
+
+| name       | type      | default                 | description                                                      |
+| ---------- | --------- | ----------------------- | ---------------------------------------------------------------- |
+| absolute   | `boolean` | `false`                 | If true, absolute position will be used to for split text nodes. |
+| tagName    | `string`  | `"div"`                 | The HTML tag that will be used for split text nodes              |
+| lineClass  | `string`  | `"line"`                | The className all split line elements                            |
+| wordClass  | `string`  | `"word"`                | The className for split word elements                            |
+| charClass  | `string`  | `"char"`                | The className for split character elements                       |
+| splitClass | `string`  | `null`                  | A className for all split text elements                          |
+| types      | `string`  | `"lines, words, chars"` | Comma separated list of types                                    |
+| split      | `string`  | ""                      | Alias for `types`                                                |
+
+
+###  Instance Properties
+
+
+#### `instance.lines: HTMLElement[]`
+
+An array of the split line elements in the splitType instance
+
+#### `instance.words: HTMLElement[]`
+
+An array of the split word elements in the splitType instance
+
+#### `instance.chars: HTMLElement[]`
+
+An array of the split character elements
+
+
+### Instance Methods
+
+#### `instance.split(options): void`
+
+This method is automatically called by the SplitType constructor. But it can be called manually to re-split text using new options. 
+
+#### `revert(): void`
+
+Restores target elements to their original text content. It also clears cached data associated with the split text nodes. 
+
+### Static Properties
+
+#### `get SplitType.defaults`
+
+Gets the default settings for all SplitType calls
+
+#### `set SplitType.defaults`
+
+Set the defaults settings. The value should be object containing specific settings to override. The value will be merged with the existing defaults object.
+
+```js
+// To have splitType use absolute position by default.
+SplitType.defaults = { absolute: true }
+```
+  
+## Examples
+
+**Text Animation with GSAP**
 ``` js 
-// This splits the text in '.banner h1' into both words and characters,
-// using absolute positioning. 
-var instance = new SplitType('.banner h1', {
-	split: 'words, chars', 
-	position: 'absolute'
+// Split text into characters using absolute positioning.
+const text = new SplitType('#target', {
+	types: 'chars',
+	absolute: true
 });
 
-// Pass the split characters directly into a Velocity
-// TIP: using Velocity's features like stagger, drag, and backwards is 
-Velocity( instance.chars, 'transition.slideDownBigIn', { duration: 1000, stagger: 100 })
-
-````
+// Animate characters into view with a stagger effect
+gsap.from(text.chars, {
+	opacity: 0,
+	y: 20
+  duration: 1,
+	stagger: { amount: 0.1 },
+})
+```

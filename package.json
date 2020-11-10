@@ -2,7 +2,8 @@
   "name": "split-type",
   "version": "0.1.0",
   "description": "A javascript library that splits plain text into individual lines, words, and characters.",
-  "main": "split-type.js",
+  "main": "dist/split-type.js",
+  "unpkg": "dist/split-type.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukePeavey/SplitType.git"
@@ -20,17 +21,39 @@
     "url": "https://github.com/lukePeavey/SplitType/issues"
   },
   "homepage": "https://github.com/lukePeavey/SplitType#readme",
+  "scripts": {
+    "test": "jest  --env=jsdom",
+    "test:watch": "jest --watchAll --env=jsdom",
+    "build": "rollup -c",
+    "start": "cd examples && yarn run start",
+    "lint": "./node_modules/.bin/eslint . --color && echo \"eslint: no lint errors\""
+  },
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
     "@rollup/plugin-babel": "^5.2.1",
     "@types/jest": "^26.0.15",
-    "eslint": "^7.12.1",
+    "eslint": "7.2.0",
+    "eslint-config-airbnb-base": "14.2.0",
     "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.21.2",
     "husky": "^4.3.0",
     "jest": "^26.6.1",
     "prettier": "^2.1.2",
     "pretty-quick": "^3.1.0",
     "rollup": "^2.32.1",
     "rollup-plugin-terser": "^7.0.2"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead"
+  ],
+  "jest": {
+    "watchman": false,
+    "setupFiles": [
+      "<rootDir>/scripts/test-setup.js"
+    ]
   }
 }

@@ -1,0 +1,6 @@
+umd/*
+dist/*
+es/*
+node_modules/*
+private/*
+.vscode/*

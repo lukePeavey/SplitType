@@ -1,5 +1,11 @@
 import babel from '@rollup/plugin-babel'
 import { terser } from 'rollup-plugin-terser'
+import banner from 'rollup-plugin-banner'
+
+const fileHeader = `SplitType
+https://github.com/lukePeavey/SplitType
+@version <%= pkg.version %>
+@author Luke Peavey <lwpeavey@gmail.com>`
 
 export default [
   // UMD bundle
@@ -10,7 +16,7 @@ export default [
       format: 'umd',
       name: 'SplitType',
     },
-    plugins: [babel({ babelHelpers: 'bundled' })],
+    plugins: [babel({ babelHelpers: 'bundled' }), banner(fileHeader)],
   },
   // Minified UMD bundle
   {
@@ -20,6 +26,6 @@ export default [
       format: 'umd',
       name: 'SplitType',
     },
-    plugins: [babel({ babelHelpers: 'bundled' }), terser()],
+    plugins: [babel({ babelHelpers: 'bundled' }), terser(), banner(fileHeader)],
   },
 ]

@@ -1,6 +1,0 @@
-node_modules
-/private/*
-__tests__/*
-__mocks__/*
-.vscode/*
-yarn.lock

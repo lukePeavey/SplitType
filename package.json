@@ -4,6 +4,10 @@
   "description": "A javascript library that splits plain text into individual lines, words, and characters.",
   "main": "dist/split-type.js",
   "unpkg": "dist/split-type.min.js",
+  "files": [
+    "dist",
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukePeavey/SplitType.git"

@@ -8,24 +8,34 @@ https://github.com/lukePeavey/SplitType
 @author Luke Peavey <lwpeavey@gmail.com>`
 
 export default [
+  // Minified UMD bundle
+  {
+    input: 'lib/index.js',
+    output: {
+      file: 'umd/index.min.js',
+      format: 'umd',
+      name: 'SplitType',
+    },
+    plugins: [babel({ babelHelpers: 'bundled' }), terser(), banner(fileHeader)],
+  },
   // UMD bundle
   {
     input: 'lib/index.js',
     output: {
-      file: 'dist/split-type.js',
+      file: 'umd/index.js',
       format: 'umd',
       name: 'SplitType',
     },
     plugins: [babel({ babelHelpers: 'bundled' }), banner(fileHeader)],
   },
-  // Minified UMD bundle
+  // ESM Module
   {
-    input: 'lib/index.js',
+    input: 'lib/SplitType.js',
     output: {
-      file: 'dist/split-type.min.js',
-      format: 'umd',
+      file: 'dist/index.js',
+      format: 'esm',
       name: 'SplitType',
     },
-    plugins: [babel({ babelHelpers: 'bundled' }), terser(), banner(fileHeader)],
+    plugins: [babel({ babelHelpers: 'bundled' }), banner(fileHeader)],
   },
 ]

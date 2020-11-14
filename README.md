@@ -1,5 +1,7 @@
 # SplitType
 
+[![npm version](https://badge.fury.io/js/split-type.svg)](https://www.npmjs.com/package/split-type)
+
 SplitType is a small javascript library that splits HTML text into elements so that lines, words, and characters can be animated independently. It was inspired by GSAP's SplitText plugin, and can be used with any animation library. 
 
 ## Installation

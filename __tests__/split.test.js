@@ -104,7 +104,7 @@ describe('split(element, options)', () => {
     expect(result.lines[0].textContent).toEqual(textContent)
   })
 
-  test(`Splits text into lines and words`, () => {
+  it(`Splits text into lines and words`, () => {
     const settings = { ...defaults, types: 'lines, words' }
     const elem = createElement('div', { textContent })
     const result = split(elem, settings)
@@ -126,7 +126,7 @@ describe('split(element, options)', () => {
     expect(result.lines[0].textContent).toEqual(textContent)
   })
 
-  test(`Splits text into lines and characters`, () => {
+  it(`Splits text into lines and characters`, () => {
     const settings = { ...defaults, types: 'lines, chars' }
     const elem = createElement('div', { textContent })
     const result = split(elem, settings)
@@ -148,7 +148,7 @@ describe('split(element, options)', () => {
     expect(result.lines[0].textContent).toEqual(textContent)
   })
 
-  test(`Splits text into lines, words and characters`, () => {
+  it(`Splits text into lines, words and characters`, () => {
     const settings = defaults
     const elem = createElement('div', { textContent })
     const result = split(elem, settings)
@@ -175,5 +175,11 @@ describe('split(element, options)', () => {
     expect(result.lines[0].tagName).toMatch(new RegExp(settings.tagName, 'i'))
     expect(result.lines[0].classList.contains(settings.lineClass)).toBe(true)
     expect(result.lines[0].textContent).toEqual(textContent)
+  })
+
+  it(`Splits text containing unicode characters`, () => {
+    const elem = createElement('div', { textContent: '📌foo' })
+    const result = split(elem)
+    expect(result.chars[0].textContent).toEqual('📌')
   })
 })

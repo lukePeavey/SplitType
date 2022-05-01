@@ -228,7 +228,10 @@ SplitType {
     "lineClass": "line",
     "splitClass": "",
     "tagName": "div",
-    "types": "words, chars",
+    "types": Array [
+      "words",
+      "chars",
+    ],
     "wordClass": "word",
   },
   "words": Array [
@@ -707,7 +710,11 @@ SplitType {
     "lineClass": "line",
     "splitClass": "",
     "tagName": "div",
-    "types": "lines, words, chars",
+    "types": Array [
+      "lines",
+      "words",
+      "chars",
+    ],
     "wordClass": "word",
   },
   "words": Array [

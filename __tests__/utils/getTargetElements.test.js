@@ -7,14 +7,14 @@ const querySelectorAll = document.querySelectorAll.bind(document)
 const getElementsByTagName = document.querySelectorAll.bind(document)
 
 // Create three divs with the following IDs
-const divs = ['one', 'two', 'three'].map((id) => {
-  return createElement('div', { id, class: 'text' })
-})
+const divs = ['one', 'two', 'three'].map((id) =>
+  createElement('div', { id, class: 'text' })
+)
 
 // Create three spans with the following IDs
-const spans = ['four', 'five', 'six'].map((id) => {
-  return createElement('span', { id, class: 'text' })
-})
+const spans = ['four', 'five', 'six'].map((id) =>
+  createElement('span', { id, class: 'text' })
+)
 
 // An array of all six elements
 const elements = [...divs, ...spans]
@@ -77,7 +77,7 @@ describe(`utils.getTargetElements(ArrayLike<element>)`, () => {
   it(`Flattens a nested arrays containing multiple collections`, () => {
     const element = document.createElement('span')
     const nodeList = querySelectorAll('div')
-    const nestedArray = [ querySelectorAll('div'), element]
+    const nestedArray = [querySelectorAll('div'), element]
     expect(getTargetElements(nodeList)).toEqual(divs)
     expect(getTargetElements(nestedArray)).toEqual([...divs, element])
   })

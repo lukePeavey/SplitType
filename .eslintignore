@@ -3,4 +3,5 @@ dist/*
 es/*
 node_modules/*
 private/*
+examples/*
 .vscode/*

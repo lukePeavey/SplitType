@@ -14,6 +14,6 @@ describe('utils.isArrayLike(value)', () => {
   it(`Returns false if value is not ArrayLike`, () => {
     expect(isArrayLike({})).toBe(false)
     expect(isArrayLike('string')).toBe(false)
-    expect(isArrayLike(function f() {})).toBe(false)
+    expect(isArrayLike(() => {})).toBe(false)
   })
 })

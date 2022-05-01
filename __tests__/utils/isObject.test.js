@@ -7,7 +7,7 @@ describe('utils.isObject(value)', () => {
     expect(isObject(document)).toBe(true)
   })
   it(`Returns false if value is a number, string, function, boolean, null, or undefined`, () => {
-    expect(isObject(function f() {})).toBe(false)
+    expect(isObject(() => {})).toBe(false)
     expect(isObject(null)).toBe(false)
     expect(isObject(undefined)).toBe(false)
     expect(isObject('string')).toBe(false)

@@ -10,6 +10,12 @@ declare module 'split-type' {
     split: string
   }
 
+  type TargetElement =
+    | string
+    | HTMLElement
+    | ArrayLike<HTMLElement>
+    | Array<HTMLElement | ArrayLike<HTMLElement>>
+
   export default class SplitType {
     /**
      * An array of the split line elements in the splitType instance
@@ -33,25 +39,35 @@ declare module 'split-type' {
      * override. The value will be merged with the existing defaults object.
      */
     static defaults: Partial<SplitTypeOptions>
+    /**
+     * Sets global defaults for all SplitType instances. The provided object
+     * is merged with the existing settings.
+     */
+    static setDefaults(options: Partial<SplitTypeOptions>): SplitTypeOptions
+
+    /**
+     * Creates a new `SplitType` instance
+     *
+     * This static method provides a way to call `SplitType` without using the
+     * new keyword.
+     */
+    static create(
+      target: TargetElement,
+      options?: Partial<SplitTypeOptions>
+    ): SplitType
 
     /**
      * Creates a new `SplitType` instance
      *
      * @param target The target elements to split. can be one of:
      *  - {string} A css selector
-     *  - {HTMLElement} A single element
+     *  - {HTMLElement} A single element node
      *  - {ArrayLike<HTMLElement>} A collection of elements
-     *  - {Array<HTMLElement | ArrayLike<HTMLElement>>} A nested array of elements
+     *  - {Array<HTMLElement | ArrayLike<HTMLElement>>} An array containing
+     *    HTML elements and/or collections of HTML elements.
      * @param [options] Settings for the SplitType instance
      */
-    constructor(
-      target:
-        | string
-        | HTMLElement
-        | ArrayLike<HTMLElement>
-        | Array<HTMLElement | ArrayLike<HTMLElement>>,
-      options?: Partial<SplitTypeOptions>
-    )
+    constructor(target: TargetElement, options?: Partial<SplitTypeOptions>)
 
     /**
      * Splits the text in all target elements. This method is called

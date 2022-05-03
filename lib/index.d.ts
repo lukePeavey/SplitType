@@ -1,4 +1,10 @@
 declare module 'split-type' {
+  type TypesValue = 'lines' | 'words' | 'chars'
+  type TypesListString =
+    | TypesValue
+    | `${TypesValue}, ${TypesValue}`
+    | `${TypesValue}, ${TypesValue}, ${TypesValue}`
+
   type SplitTypeOptions = {
     absolute: boolean
     tagName: string
@@ -6,8 +12,8 @@ declare module 'split-type' {
     wordClass: string
     charClass: string
     splitClass: string
-    types: string
-    split: string
+    types: TypesListString | TypesValue[]
+    split: TypesListString | TypesValue[]
   }
 
   type TargetElement =

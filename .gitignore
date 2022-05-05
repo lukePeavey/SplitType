@@ -3,10 +3,10 @@
 /es
 /cjs
 /dist
+/storybook-static
 
 # Examples/docs
 /examples
-/.storybook
 
 
 # Dependencies

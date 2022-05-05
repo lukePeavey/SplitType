@@ -31,14 +31,24 @@
   "scripts": {
     "test": "jest  --env=jsdom",
     "test:watch": "jest --watchAll --env=jsdom",
+    "puppeteer": "npm run build-storybook && jest __stories__/puppeteer.test.js",
+    "puppeteer:dev": "NODE_ENV=development jest __stories__/puppeteer.test.js --watchAll ",
     "build": "rollup -c",
     "start": "cd examples && yarn run start",
-    "lint": "./node_modules/.bin/eslint . --color && echo \"eslint: no lint errors\""
+    "lint": "./node_modules/.bin/eslint . --color && echo \"eslint: no lint errors\"",
+    "storybook": "start-storybook -p 6006 ",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@rollup/plugin-babel": "^5.3.1",
+    "@storybook/addon-actions": "^6.4.22",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/addon-links": "^6.4.22",
+    "@storybook/addon-storyshots": "^6.4.22",
+    "@storybook/addon-storyshots-puppeteer": "^6.4.22",
+    "@storybook/html": "^6.4.22",
     "@types/jest": "^26.0.15",
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -48,6 +58,7 @@
     "jest": "27.x",
     "prettier": "^2.6.2",
     "pretty-quick": "^3.1.3",
+    "puppeteer": "^13.7.0",
     "rollup": "^2.71.1",
     "rollup-plugin-banner": "^0.2.1",
     "rollup-plugin-terser": "^7.0.2"

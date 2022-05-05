@@ -1,0 +1,33 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.target {
+  font-family: Roboto;
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-size: 28px;
+  max-width: 700px;
+}
+
+:root {
+  --line-box: 0px 0px 0px 1px rgba(0, 229, 255, 0.37);
+  --word-box: 0px 0px 0px 1px rgba(255, 0, 132, 0.37);
+  --char-box: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+.highlight .line {
+  box-shadow: var(--line-box);
+}
+
+.highlight .word {
+  box-shadow: var(--word-box);
+}
+
+.highlight .char:first-child {
+  color: rgba(170, 0, 255, 0.9);
+}

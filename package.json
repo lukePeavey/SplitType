@@ -11,6 +11,17 @@
     "dist/*.{js,ts}",
     "lib/**/*.{js,ts}"
   ],
+  "scripts": {
+    "test": "jest --env=jsdom",
+    "test:watch": "jest --env=jsdom --watchAll",
+    "puppeteer": "NODE_ENV=development jest --testMatch='**/__stories__/**/?*.test.js' --env=jsdom  ",
+    "puppeteer:watch": "NODE_ENV=development jest --testMatch='**/__stories__/**/?*.test.js' --env=jsdom  --watchAll",
+    "puppeteer:static": "yarn storybook:build && jest --testMatch='**/__stories__/**/?*.test.js' --env=jsdom",
+    "build": "rollup -c",
+    "lint": "./node_modules/.bin/eslint . --color && echo \"eslint: no lint errors\"",
+    "storybook": "start-storybook -p 6006 ",
+    "storybook:build": "build-storybook"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukePeavey/SplitType.git"
@@ -28,17 +39,6 @@
     "url": "https://github.com/lukePeavey/SplitType/issues"
   },
   "homepage": "https://github.com/lukePeavey/SplitType#readme",
-  "scripts": {
-    "test": "jest  --env=jsdom",
-    "test:watch": "jest --watchAll --env=jsdom",
-    "puppeteer": "npm run build-storybook && jest __stories__/puppeteer.test.js",
-    "puppeteer:dev": "NODE_ENV=development jest __stories__/puppeteer.test.js --watchAll ",
-    "build": "rollup -c",
-    "start": "cd examples && yarn run start",
-    "lint": "./node_modules/.bin/eslint . --color && echo \"eslint: no lint errors\"",
-    "storybook": "start-storybook -p 6006 ",
-    "build-storybook": "build-storybook"
-  },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
@@ -75,6 +75,9 @@
     "testEnvironmentOptions": {
       "url": "http://localhost/"
     },
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)"
+    ],
     "setupFiles": [
       "<rootDir>/scripts/test-setup.js"
     ]

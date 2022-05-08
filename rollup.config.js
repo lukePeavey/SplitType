@@ -26,7 +26,7 @@ export default [
       format: 'umd',
       name: 'SplitType',
     },
-    plugins: [babel({ babelHelpers: 'bundled' }), banner(fileHeader)],
+    plugins: [banner(fileHeader)],
   },
   // ESM Module
   {
@@ -36,6 +36,6 @@ export default [
       format: 'esm',
       name: 'SplitType',
     },
-    plugins: [babel({ babelHelpers: 'bundled' }), banner(fileHeader)],
+    plugins: [banner(fileHeader)],
   },
 ]

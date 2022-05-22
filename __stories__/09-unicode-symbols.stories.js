@@ -1,5 +1,6 @@
 import getTemplate from './helpers/getTemplate'
 import toChars from '../lib/utils/toChars'
+import { baseArgTypes } from './constants'
 
 const text = 'Foo😀 Bar👌'
 
@@ -8,20 +9,17 @@ const wordCount = text.split(' ').length
 const charCount = toChars(text.replace(/\s/g, '')).length
 
 export default {
-  title: 'With Unicode Symbols',
-  argTypes: {
-    children: { control: 'text' },
-    types: { control: 'array' },
-  },
+  title: 'Unicode Symbols',
+  argTypes: { ...baseArgTypes },
 }
 
 const Template = getTemplate({ children: text })
 
 export const NotSplit = Template.bind({})
-NotSplit.args = { types: [] }
+NotSplit.args = { types: 'none' }
 
 export const SplitLinesWordsAndChars = Template.bind({})
-SplitLinesWordsAndChars.args = { types: ['lines', 'words', 'chars'] }
+SplitLinesWordsAndChars.args = { types: 'lines, words, chars' }
 SplitLinesWordsAndChars.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.target > .line')).length).toEqual(lineCount)
@@ -31,7 +29,7 @@ SplitLinesWordsAndChars.parameters = {
 }
 
 export const SplitLines = Template.bind({})
-SplitLines.args = { types: ['lines'] }
+SplitLines.args = { types: 'lines' }
 SplitLines.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.target > .line')).length).toEqual(lineCount)
@@ -41,7 +39,7 @@ SplitLines.parameters = {
 }
 
 export const SplitWords = Template.bind({})
-SplitWords.args = { types: ['words'] }
+SplitWords.args = { types: 'words' }
 SplitWords.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.line')).length).toEqual(0)

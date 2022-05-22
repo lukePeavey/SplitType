@@ -1,0 +1,593 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SplitType SplitType('#target1') matches snapshot 1`] = `
+SplitType {
+  "chars": Array [
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      F
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      B
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      a
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      r
+    </div>,
+  ],
+  "elements": Array [
+    <div
+      class="target"
+      id="target1"
+    >
+      <div
+        class="line"
+        style="display: block; text-align: ; width: 100%;"
+      >
+        <div
+          class="word"
+          style="display: inline-block; position: relative"
+        >
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            F
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            o
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            o
+          </div>
+        </div>
+         
+        <div
+          class="word"
+          style="display: inline-block; position: relative"
+        >
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            B
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            a
+          </div>
+          <div
+            class="char"
+            style="display: inline-block;"
+          >
+            r
+          </div>
+        </div>
+      </div>
+    </div>,
+  ],
+  "isSplit": true,
+  "lines": Array [
+    <div
+      class="line"
+      style="display: block; text-align: ; width: 100%;"
+    >
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          F
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+      </div>
+       
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          B
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          a
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          r
+        </div>
+      </div>
+    </div>,
+  ],
+  "originals": Array [
+    "Foo Bar",
+  ],
+  "settings": Object {
+    "absolute": false,
+    "charClass": "char",
+    "lineClass": "line",
+    "splitClass": "",
+    "tagName": "div",
+    "types": Array [
+      "lines",
+      "words",
+      "chars",
+    ],
+    "wordClass": "word",
+  },
+  "words": Array [
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        F
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+    </div>,
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        B
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        a
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        r
+      </div>
+    </div>,
+  ],
+}
+`;
+
+exports[`SplitType SplitType('#target1', { split: 'lines' }) matches snapshot 1`] = `
+SplitType {
+  "chars": Array [],
+  "elements": Array [
+    <div
+      class="target"
+      id="target1"
+    >
+      <div
+        class="line"
+        style="display: block; text-align: ; width: 100%;"
+      >
+        Foo
+         
+        Bar
+      </div>
+    </div>,
+  ],
+  "isSplit": true,
+  "lines": Array [
+    <div
+      class="line"
+      style="display: block; text-align: ; width: 100%;"
+    >
+      Foo
+       
+      Bar
+    </div>,
+  ],
+  "originals": Array [
+    "Foo Bar",
+  ],
+  "settings": Object {
+    "absolute": false,
+    "charClass": "char",
+    "lineClass": "line",
+    "splitClass": "",
+    "tagName": "div",
+    "types": Array [
+      "lines",
+    ],
+    "wordClass": "word",
+  },
+  "words": Array [],
+}
+`;
+
+exports[`SplitType SplitType('#target1', { split: 'words, chars' }) matches snapshot 1`] = `
+SplitType {
+  "chars": Array [
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      F
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      B
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      a
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      r
+    </div>,
+  ],
+  "elements": Array [
+    <div
+      class="target"
+      id="target1"
+    >
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          F
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+      </div>
+       
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          B
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          a
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          r
+        </div>
+      </div>
+    </div>,
+  ],
+  "isSplit": true,
+  "lines": Array [],
+  "originals": Array [
+    "Foo Bar",
+  ],
+  "settings": Object {
+    "absolute": false,
+    "charClass": "char",
+    "lineClass": "line",
+    "splitClass": "",
+    "tagName": "div",
+    "types": Array [
+      "words",
+      "chars",
+    ],
+    "wordClass": "word",
+  },
+  "words": Array [
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        F
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+    </div>,
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        B
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        a
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        r
+      </div>
+    </div>,
+  ],
+}
+`;
+
+exports[`SplitType SplitType('.target') matches snapshot. 1`] = `
+SplitType {
+  "chars": Array [
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      F
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      o
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      B
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      a
+    </div>,
+    <div
+      class="char"
+      style="display: inline-block;"
+    >
+      r
+    </div>,
+  ],
+  "elements": Array [
+    <div
+      class="target"
+      id="target1"
+    >
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          F
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          o
+        </div>
+      </div>
+       
+      <div
+        class="word"
+        style="display: inline-block; position: relative"
+      >
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          B
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          a
+        </div>
+        <div
+          class="char"
+          style="display: inline-block;"
+        >
+          r
+        </div>
+      </div>
+    </div>,
+  ],
+  "isSplit": true,
+  "lines": Array [],
+  "originals": Array [
+    "Foo Bar",
+  ],
+  "settings": Object {
+    "absolute": false,
+    "charClass": "char",
+    "lineClass": "line",
+    "splitClass": "",
+    "tagName": "div",
+    "types": Array [
+      "words",
+      "chars",
+    ],
+    "wordClass": "word",
+  },
+  "words": Array [
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        F
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        o
+      </div>
+    </div>,
+    <div
+      class="word"
+      style="display: inline-block; position: relative"
+    >
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        B
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        a
+      </div>
+      <div
+        class="char"
+        style="display: inline-block;"
+      >
+        r
+      </div>
+    </div>,
+  ],
+}
+`;

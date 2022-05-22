@@ -7,12 +7,14 @@ const lineCount = 3
 const wordCount = text.split(' ').length
 const charCount = text.replace(/\s+/g, '').split('').length
 
+// Story config
 export default {
-  title: 'Multi-line text',
+  title: 'Absolute Position',
   argTypes: { ...baseArgTypes },
 }
 
-const Template = getTemplate({ children: text })
+// Create the template used to render stories in this section
+const Template = getTemplate({ children: text, absolute: true })
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }
@@ -41,11 +43,9 @@ export const SplitWordsAndChars = Template.bind({})
 SplitWordsAndChars.args = { types: 'words, chars' }
 SplitWordsAndChars.parameters = {
   async puppeteerTest(page) {
-    // Should not contain any line elements
     expect((await page.$$('.line')).length).toEqual(0)
-    //
     expect((await page.$$('.target > .word')).length).toEqual(wordCount)
-    expect((await page.$$('.word > .char')).length).toEqual(charCount)
+    expect((await page.$$(' .word > .char')).length).toEqual(charCount)
   },
 }
 

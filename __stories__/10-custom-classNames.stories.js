@@ -1,12 +1,16 @@
 import getTemplate from './helpers/getTemplate'
+import { baseArgTypes } from './constants'
 
 const text = `Hello World!`
 
 export default {
-  title: 'SplitType options',
+  title: 'Custom ClassNames',
   argTypes: {
-    children: { control: 'text' },
-    types: { control: 'array' },
+    ...baseArgTypes,
+    splitClass: { control: 'text' },
+    lineClass: { control: 'text' },
+    wordClass: { control: 'text' },
+    charClass: { control: 'text' },
   },
 }
 
@@ -17,6 +21,7 @@ const Template = getTemplate({ children: text })
 
 export const SplitClass = Template.bind({})
 SplitClass.args = {
+  types: 'lines, words, chars',
   lineClass: 'my-line',
   wordClass: 'my-word',
   charClass: 'my-char',
@@ -28,18 +33,5 @@ SplitClass.parameters = {
     expect((await page.$$('.split.my-line')).length).toEqual(1)
     expect((await page.$$('.split.my-word')).length).toEqual(wordCount)
     expect((await page.$$('.split.my-char')).length).toEqual(charCount)
-  },
-}
-
-export const customTag = Template.bind({})
-customTag.args = {
-  tagName: 'span',
-}
-
-customTag.parameters = {
-  async puppeteerTest(page) {
-    expect((await page.$$('span.line')).length).toEqual(1)
-    expect((await page.$$('span.word')).length).toEqual(wordCount)
-    expect((await page.$$('span.char')).length).toEqual(charCount)
   },
 }

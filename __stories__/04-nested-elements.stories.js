@@ -1,11 +1,11 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import count from './helpers/count'
 import { baseArgTypes } from './constants'
 
-const text = `<a href="#" target="_blank">SplitType</a> now fully supports <strong>nested elements</strong>`
+const children = `<a href="#" target="_blank">SplitType</a> now fully supports <strong>nested elements</strong>`
 
 export default {
-  title: 'Nested Elements',
+  title: 'Tests/Nested Elements',
   argTypes: { ...baseArgTypes },
 }
 
@@ -14,9 +14,13 @@ export default {
 // Number of lines (when width of target element is >= 700px )
 const lineCount = 1
 // Total number of words and characters
-const { words, chars, plainWords } = count(text)
+const { words, chars, plainWords } = count(children)
+
 // Create the story template
-const Template = getTemplate({ children: text })
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

@@ -14,5 +14,5 @@ const storybookUrl = isDevelopment
 initStoryshots({
   suite: 'Puppeteer storyshots',
   test: puppeteerTest({ storybookUrl }),
-  framework: 'html',
+  framework: 'svelte',
 })

@@ -1,10 +1,10 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import { baseArgTypes } from './constants'
 
-const text = `Hello World!`
+const children = `Hello World!`
 
 export default {
-  title: 'Custom ClassNames',
+  title: 'Tests/Custom ClassNames',
   argTypes: {
     ...baseArgTypes,
     splitClass: { control: 'text' },
@@ -14,10 +14,13 @@ export default {
   },
 }
 
-const wordCount = text.split(' ').length
-const charCount = text.replace(/\s+/g, '').split('').length
+const wordCount = children.split(' ').length
+const charCount = children.replace(/\s+/g, '').split('').length
 
-const Template = getTemplate({ children: text })
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const SplitClass = Template.bind({})
 SplitClass.args = {

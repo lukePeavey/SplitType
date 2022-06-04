@@ -1,18 +1,21 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import { baseArgTypes } from './constants'
 
-const text = `Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.`
+const children = `Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.`
 
 const lineCount = 3
-const wordCount = text.split(' ').length
-const charCount = text.replace(/\s+/g, '').split('').length
+const wordCount = children.split(' ').length
+const charCount = children.replace(/\s+/g, '').split('').length
 
 export default {
-  title: 'Multi-line text',
+  title: 'Tests/Multi-line text',
   argTypes: { ...baseArgTypes },
 }
 
-const Template = getTemplate({ children: text })
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

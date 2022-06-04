@@ -1,18 +1,18 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import count from './helpers/count'
 import { baseArgTypes } from './constants'
 
-const text = `<a href="#" target="_blank">SplitType</a> now fully supports <strong>nested elements</strong>`
+const children = `<a href="#" target="_blank">SplitType</a> now fully supports <strong>nested elements</strong>`
 
 export default {
-  title: 'Nested Elements (Absolute)',
+  title: 'Tests/Nested Elements (Absolute)',
   argTypes: { ...baseArgTypes },
 }
 
 // Expected results
 // Number of lines (when width of target element is >= 700px )
 const lines = 1
-const { words, chars, plainWords } = count(text)
+const { words, chars, plainWords } = count(children)
 async function getSplitTextNodes(page) {
   return page.$$eval('.target *', (splitNodes) =>
     splitNodes.map((node) => ({
@@ -22,7 +22,10 @@ async function getSplitTextNodes(page) {
   )
 }
 
-const Template = getTemplate({ children: text, position: 'absolute' })
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

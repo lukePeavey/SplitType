@@ -1,16 +1,16 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import count from './helpers/count'
 import { baseArgTypes } from './constants'
 
-const text = `<a href="#" target="_blank">SplitType</a> now supports <strong>nested elements</strong> like <code>&lt;span&gt;</code>, <code>&lt;strong&gt;</code>, and <code>&lt;em&gt;</code>. You can also use interactive elements like a <button>button</button> or <a href="#" target="_blank">link</a> inside your split text.`
+const children = `<a href="#" target="_blank">SplitType</a> now supports <strong>nested elements</strong> like <code>&lt;span&gt;</code>, <code>&lt;strong&gt;</code>, and <code>&lt;em&gt;</code>. You can also use interactive elements like a <button>button</button> or <a href="#" target="_blank">link</a> inside your split text.`
 
 export default {
-  title: 'Multi-line Nested Elements (Absolute)',
+  title: 'Tests/Multi-line Nested Elements (Absolute)',
   argTypes: { ...baseArgTypes },
 }
 
 const lines = 4
-const { words: actualWords, chars, plainWords } = count(text)
+const { words: actualWords, chars, plainWords } = count(children)
 const words = actualWords + 3
 
 async function getSplitTextNodes(page) {
@@ -22,7 +22,11 @@ async function getSplitTextNodes(page) {
   )
 }
 
-const Template = getTemplate({ children: text, absolute: true })
+// Create the story template
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

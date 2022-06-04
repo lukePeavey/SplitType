@@ -1,13 +1,13 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import { baseArgTypes } from './constants'
 
-const text = [
+const children = [
   `Split Typography for Animation`,
   `We can target multiple elements`,
 ]
 
 export default {
-  title: 'Multiple Target Elements',
+  title: 'Tests/Multiple Target Elements',
   argTypes: {
     ...baseArgTypes,
     splitClass: { control: 'text' },
@@ -17,7 +17,10 @@ export default {
   },
 }
 
-const Template = getTemplate({ children: text })
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

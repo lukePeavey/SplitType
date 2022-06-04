@@ -1,19 +1,22 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import toChars from '../lib/utils/toChars'
 import { baseArgTypes } from './constants'
 
-const text = 'Foo😀 Bar👌'
+const children = 'Foo😀 Bar👌'
 
 const lineCount = 1
-const wordCount = text.split(' ').length
-const charCount = toChars(text.replace(/\s/g, '')).length
+const wordCount = children.split(' ').length
+const charCount = toChars(children.replace(/\s/g, '')).length
 
 export default {
-  title: 'Unicode Symbols',
+  title: 'Tests/Unicode Symbols',
   argTypes: { ...baseArgTypes },
 }
 
-const Template = getTemplate({ children: text })
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

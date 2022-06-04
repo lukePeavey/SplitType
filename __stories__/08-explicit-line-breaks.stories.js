@@ -1,21 +1,24 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import { baseArgTypes } from './constants'
 
-const text = `
+const children = `
 This is the first line. <br>
 Followed by the second line. <br>
 Then the last one.`
 
 const lineCount = 3
-const wordCount = text.replace(/<br\s*\/?>/g, '').split(' ').length
-const charCount = text.replace(/(<br\s*\/?>)|\s+/g, '').split('').length
+const wordCount = children.replace(/<br\s*\/?>/g, '').split(' ').length
+const charCount = children.replace(/(<br\s*\/?>)|\s+/g, '').split('').length
 
 export default {
-  title: 'Explicit Line Breaks',
+  title: 'Tests/Explicit Line Breaks',
   argTypes: { ...baseArgTypes },
 }
 
-const Template = getTemplate({ children: text })
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

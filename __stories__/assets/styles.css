@@ -8,6 +8,16 @@
   --fontSize: 32px;
 }
 
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.container {
+  margin: 16px;
+  padding: 16px;
+}
+
 *,
 *::before,
 *::after {
@@ -15,6 +25,7 @@
 }
 
 .target {
+  flex: 1;
   font-family: Roboto;
   color: var(--text);
   line-height: 1.5;

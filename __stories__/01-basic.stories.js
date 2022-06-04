@@ -1,10 +1,10 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import { baseArgTypes } from './constants'
 
-const text = `Split Typography for Animation`
+const children = `Split Typography for Animation`
 
 export default {
-  title: 'Basic',
+  title: 'Tests/Basic',
   argTypes: { ...baseArgTypes },
   parameters: {
     docs: {
@@ -13,10 +13,13 @@ export default {
   },
 }
 
-const wordCount = text.split(' ').length
-const charCount = text.replace(/\s+/g, '').split('').length
+const wordCount = children.split(' ').length
+const charCount = children.replace(/\s+/g, '').split('').length
 
-const Template = getTemplate({ children: text })
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

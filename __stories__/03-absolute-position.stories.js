@@ -1,20 +1,23 @@
-import getTemplate from './helpers/getTemplate'
+import Example from './components/Example.svelte'
 import { baseArgTypes } from './constants'
 
-const text = `Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.`
+const children = `Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.`
 
 const lineCount = 3
-const wordCount = text.split(' ').length
-const charCount = text.replace(/\s+/g, '').split('').length
+const wordCount = children.split(' ').length
+const charCount = children.replace(/\s+/g, '').split('').length
 
 // Story config
 export default {
-  title: 'Absolute Position',
+  title: 'Tests/Absolute Position',
   argTypes: { ...baseArgTypes },
 }
 
-// Create the template used to render stories in this section
-const Template = getTemplate({ children: text, absolute: true })
+// Story template
+const Template = (options) => ({
+  Component: Example,
+  props: { children, options },
+})
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

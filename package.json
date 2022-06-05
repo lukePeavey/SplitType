@@ -57,6 +57,7 @@
     "eslint-plugin-import": "^2.26.0",
     "husky": "^7.0.0",
     "jest": "27.x",
+    "jest-transform-svelte": "^2.1.1",
     "lodash": "^4.17.21",
     "onchange": "^7.1.0",
     "prettier": "^2.6.2",

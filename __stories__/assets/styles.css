@@ -1,3 +1,23 @@
+:root {
+  --text: #333;
+  --code: #787282;
+  --accent: #fb7a7a;
+  --primary: #1ea7fd;
+  --primaryDark: #077cc5;
+  --primaryLight: #3bb4ff;
+  --fontSize: 32px;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.container {
+  margin: 16px;
+  padding: 16px;
+}
+
 *,
 *::before,
 *::after {
@@ -5,29 +25,75 @@
 }
 
 .target {
+  flex: 1;
   font-family: Roboto;
+  color: var(--text);
   line-height: 1.5;
   letter-spacing: normal;
   font-kerning: none;
   font-variant-ligatures: none;
-  font-size: 28px;
+  font-size: var(--fontSize);
   max-width: 700px;
 }
 
-:root {
-  --line-box: 0px 0px 0px 1px rgba(0, 229, 255, 0.37);
-  --word-box: 0px 0px 0px 1px rgba(255, 0, 132, 0.37);
-  --char-box: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+/* Make sure nested elements have same font size */
+.target > * {
+  font-size: inherit !important;
+  line-height: inherit !important;
 }
 
-.highlight .line {
-  box-shadow: var(--line-box);
+/***************************************
+Buttons and Links  
+****************************************/
+
+.target a {
+  text-decoration: none;
 }
 
-.highlight .word {
-  box-shadow: var(--word-box);
+.target a:hover,
+.target a:active,
+.target a:visited {
+  text-decoration: underline;
 }
 
-.highlight .char:first-child {
-  color: rgba(170, 0, 255, 0.9);
+.target a {
+  color: var(--primary);
+}
+
+.target a:hover,
+.target a:active {
+  transition: all 100ms ease-in-out;
+  color: var(--primaryDark);
+}
+
+.target button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-kerning: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  color: var(--primary);
+  border: solid 1px var(--primary);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: inherit;
+  background: none;
+  line-height: inherit;
+}
+
+.target button:hover {
+  background: var(--primary);
+  transition: all 100ms ease-in-out;
+  color: #fff;
+}
+
+.target strong {
+  color: var(--accent);
+}
+
+.target code {
+  font-family: Courier;
+  color: var(--code);
 }

@@ -14,7 +14,7 @@ const { words: actualWords, chars, plainWords } = count(children)
 const words = actualWords + 3
 
 // Create the story template
-const Template = getTemplate({ children })
+const Template = getTemplate({ children, className: 'fixed' })
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

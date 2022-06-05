@@ -135,19 +135,29 @@ Caveat: this feature is not compatible with splitting text into lines. When spli
 
 **Absolute vs Relative position**
 
-By default, split text nodes are set to relative position and `display:inline-block`. This allows split text to reflow naturally if the container is resized.
+By default, split text nodes are set to relative position and `display:inline-block`. SplitType also supports absolute position for split text nodes by setting `{ absolute: true }`. When this is enabled, each line/word/character will be set to absolute position, which can improve performance for some animations.
 
-SplitType also supports absolute position for split text nodes by setting `{absolute: true}`. When this is enabled, each line/word/character will be set to absolute position, which can improve performance for some animations. However, split text will not automatically reflow if the container size changes. You will need to manually reposition text after the container is resized.
+**Responsive Text**
+
+When text is split into words and characters using relative position, the text will automatically reflow when the container is resized. However, when absolute position is enabled, or text is split into lines, text will need to re-split after the container is resized. This can be accomplished using event listener or `ResizeObserver`, and calling the `split` method once the window or container element has been resized.
+
+For a complete example, see `__stories__/components/Example.svelte`
 
 ```js
-// Splits text using absolute position for split text elements
-const text = new SplitType('#target', { absolute: true })
+const text = new SplitType('#target')
 
-// Repositions text after the container is resized.
-// Uses lodash#debounce so the split method is only called once after container
-// has been resized.
-const ro = new ResizeObserver(debounce(() => text.split(), 400))
-ro.observe(containerElement)
+// Reposition text after the container is resized (simplified version)
+// This example uses lodash#debounce to ensure the split method only
+// gets called once after the resize is complete.
+const resizeObserver = new ResizeObserver(
+  debounce(([entry]) => {
+    // Note: you should add additional logic so the `split` method is only
+    // called if `entry.contentBoxSize.inlineSize` (the width of the container
+    // element) has changed.
+    text.split()
+  }, 500)
+)
+ro.observe(resizeObserver)
 ```
 
 ## API Reference

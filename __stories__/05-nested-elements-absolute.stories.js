@@ -30,7 +30,7 @@ NotSplit.args = { types: 'none' }
 export const SplitLinesWordsAndChars = Template.bind({})
 SplitLinesWordsAndChars.args = {
   types: 'lines, words, chars',
-  position: 'absolute',
+  absolute: true,
 }
 SplitLinesWordsAndChars.parameters = {
   async puppeteerTest(page) {
@@ -63,7 +63,7 @@ SplitLinesWordsAndChars.parameters = {
 }
 
 export const SplitLinesAndWords = Template.bind({})
-SplitLinesAndWords.args = { types: 'lines, words', position: 'absolute' }
+SplitLinesAndWords.args = { types: 'lines, words', absolute: true }
 SplitLinesAndWords.parameters = {
   async puppeteerTest(page) {
     // Total number of line, word, and character elements is correct
@@ -96,7 +96,7 @@ SplitLinesAndWords.parameters = {
 }
 
 export const SplitWordsAndChars = Template.bind({})
-SplitWordsAndChars.args = { types: 'words, chars', position: 'absolute' }
+SplitWordsAndChars.args = { types: 'words, chars', absolute: true }
 SplitWordsAndChars.parameters = {
   async puppeteerTest(page) {
     // Total number of line, word, and character elements is correct
@@ -126,7 +126,7 @@ SplitWordsAndChars.parameters = {
 }
 
 export const SplitWords = Template.bind({})
-SplitWords.args = { types: 'words', position: 'absolute' }
+SplitWords.args = { types: 'words', absolute: true }
 SplitWords.parameters = {
   async puppeteerTest(page) {
     // Total number of line, word, and character elements is correct

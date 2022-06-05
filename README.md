@@ -156,7 +156,7 @@ ro.observe(containerElement)
 
 **`target`**
 
-The target elements for the SplitType call. This can be a selector, a single element, or an ArrayLike object (ie NodeList, jQuery Object, etc). SplitType does not currently support nested HTML inside target elements. So the elements passed to `SplitType` should directly contain the text that you wish to split.
+The target elements for the SplitType call. This can be a selector, a single element, a collection of elements (ie NodeList, jQuery Object, etc).
 
 **`options`**
 
@@ -220,17 +220,14 @@ Reverts the target element(s) if they are currently split. This provides a way t
 **Text Animation with GSAP**
 
 ```js
-// Split text into characters using absolute positioning.
-const text = new SplitType('#target', {
-	types: 'chars',
-	absolute: true
-});
+// Split text into words and characters
+const text = new SplitType('#target', { types: 'words, chars' })
 
 // Animate characters into view with a stagger effect
 gsap.from(text.chars, {
-	opacity: 0,
-	y: 20
-  duration: 1,
-	stagger: { amount: 0.1 },
+  opacity: 0,
+  y: 20,
+  duration: 0.5,
+  stagger: { amount: 0.1 },
 })
 ```

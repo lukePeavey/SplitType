@@ -4,7 +4,7 @@
 
 SplitType is a small javascript library that splits HTML text into elements so that lines, words, and characters can be animated independently. It was inspired by GSAP's SplitText plugin, and can be used with any animation library.
 
-SplitType changes the html structure of the target elements, wrapping each line, word, and/or character in an element so they can animated independently.
+Under the hood, SplitType changes the html structure of the target elements, wrapping each line, word, and/or character in a element.
 
 - [Features](#features)
 - [Installation](#installation)

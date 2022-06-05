@@ -103,7 +103,7 @@ As of `v0.3`, nested elements inside the target elements will be preserved when 
 - Include interactive elements such links are buttons inside split text.
 
 ```html
-<p id="target">Hello <em>World!</em></p>
+<p id="target">Foo <em>Bar</em></p>
 ```
 
 ```js

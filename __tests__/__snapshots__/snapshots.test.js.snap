@@ -154,9 +154,6 @@ SplitType {
       </div>
     </div>,
   ],
-  "originals": Array [
-    "Foo Bar",
-  ],
   "settings": Object {
     "absolute": false,
     "charClass": "char",
@@ -249,9 +246,6 @@ SplitType {
        
       Bar
     </div>,
-  ],
-  "originals": Array [
-    "Foo Bar",
   ],
   "settings": Object {
     "absolute": false,
@@ -364,9 +358,6 @@ SplitType {
   ],
   "isSplit": true,
   "lines": Array [],
-  "originals": Array [
-    "Foo Bar",
-  ],
   "settings": Object {
     "absolute": false,
     "charClass": "char",
@@ -526,9 +517,6 @@ SplitType {
   ],
   "isSplit": true,
   "lines": Array [],
-  "originals": Array [
-    "Foo Bar",
-  ],
   "settings": Object {
     "absolute": false,
     "charClass": "char",

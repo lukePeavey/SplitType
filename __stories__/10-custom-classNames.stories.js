@@ -1,4 +1,4 @@
-import Example from './components/Example.svelte'
+import getTemplate from './helpers/getTemplate'
 import { baseArgTypes } from './constants'
 
 const children = `Hello World!`
@@ -17,10 +17,7 @@ export default {
 const wordCount = children.split(' ').length
 const charCount = children.replace(/\s+/g, '').split('').length
 
-const Template = (options) => ({
-  Component: Example,
-  props: { children, options },
-})
+const Template = getTemplate({ children })
 
 export const SplitClass = Template.bind({})
 SplitClass.args = {

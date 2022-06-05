@@ -1,4 +1,4 @@
-import Example from './components/Example.svelte'
+import getTemplate from './helpers/getTemplate'
 import count from './helpers/count'
 import { baseArgTypes } from './constants'
 
@@ -14,10 +14,7 @@ const { words: actualWords, chars, plainWords } = count(children)
 const words = actualWords + 3
 
 // Create the story template
-const Template = (options) => ({
-  Component: Example,
-  props: { children, options },
-})
+const Template = getTemplate({ children })
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

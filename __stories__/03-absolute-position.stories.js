@@ -1,4 +1,4 @@
-import Example from './components/Example.svelte'
+import getTemplate from './helpers/getTemplate'
 import { baseArgTypes } from './constants'
 
 const children = `Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.`
@@ -14,10 +14,7 @@ export default {
 }
 
 // Story template
-const Template = (options) => ({
-  Component: Example,
-  props: { children, options },
-})
+const Template = getTemplate({ children })
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none', position: 'absolute' }

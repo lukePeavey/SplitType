@@ -1,4 +1,4 @@
-import Example from './components/Example.svelte'
+import getTemplate from './helpers/getTemplate'
 import toChars from '../lib/utils/toChars'
 import { baseArgTypes } from './constants'
 
@@ -13,10 +13,7 @@ export default {
   argTypes: { ...baseArgTypes },
 }
 
-const Template = (options) => ({
-  Component: Example,
-  props: { children, options },
-})
+const Template = getTemplate({ children })
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

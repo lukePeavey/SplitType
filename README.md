@@ -95,6 +95,44 @@ const text = new SplitType('#target')
 const words = document.querySelectorAll('#target .word')
 ```
 
+**Nested Elements**
+
+As of `v0.3`, nested elements inside the target elements will be preserved when text is split. This makes it possible to:
+
+- Apply custom styles to specific parts of the test
+- Include interactive elements such links are buttons inside split text.
+
+```html
+<p id="target">Hello <em>World!</em></p>
+```
+
+```js
+SplitType.create('#target')
+```
+
+Result
+
+```html
+<div class="target">
+  <div class="line" style="display: block; text-align: start; width: 100%">
+    <div class="word" style="display: inline-block; position: relative">
+      <div class="char" style="display: inline-block">F</div>
+      <div class="char" style="display: inline-block">o</div>
+      <div class="char" style="display: inline-block">o</div>
+    </div>
+    <em style="display: inline-block; position: relative"
+      ><div class="word" style="display: inline-block; position: relative">
+        <div class="char" style="display: inline-block">B</div>
+        <div class="char" style="display: inline-block">a</div>
+        <div class="char" style="display: inline-block">r</div>
+      </div>
+    </em>
+  </div>
+</div>
+```
+
+Caveat: this feature is not compatible with splitting text into lines. When split lines is enabled, if the text content of a nested element gets broken onto multiple lines, it will result in unexpected line breaks in the split text.
+
 **Absolute vs Relative position**
 
 By default, split text nodes are set to relative position and `display:inline-block`. This allows split text to reflow naturally if the container is resized.

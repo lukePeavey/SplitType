@@ -1,0 +1,109 @@
+:root {
+  --text: #333;
+  --code: #787282;
+  --accent: #fb7a7a;
+  --primary: #1ea7fd;
+  --primaryDark: #077cc5;
+  --primaryLight: #3bb4ff;
+  --fontSize: 32px;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.container {
+  margin: 16px;
+  padding: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 732px;
+}
+
+.container.fixed {
+  width: 732px;
+}
+
+.target {
+  flex: 1;
+  font-family: Roboto;
+  color: var(--text);
+  line-height: 1.5;
+  letter-spacing: normal;
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-size: var(--fontSize);
+}
+
+/* Make sure nested elements have same font size */
+.target > * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+/***************************************
+Buttons and Links  
+****************************************/
+
+.target a {
+  text-decoration: none;
+}
+
+.target a:hover,
+.target a:active,
+.target a:visited {
+  text-decoration: underline;
+}
+
+.target a {
+  color: var(--primary);
+}
+
+.target a:hover,
+.target a:active {
+  transition: all 100ms ease-in-out;
+  color: var(--primaryDark);
+}
+
+.target button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-kerning: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  color: var(--primary);
+  border: solid 1px var(--primary);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: inherit;
+  background: none;
+  line-height: inherit;
+}
+
+.target button:hover {
+  background: var(--primary);
+  transition: all 100ms ease-in-out;
+  color: #fff;
+}
+
+.target strong {
+  color: var(--accent);
+}
+
+.target code {
+  font-family: Courier;
+  color: var(--code);
+}

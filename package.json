@@ -51,6 +51,7 @@
     "@storybook/addon-storyshots-puppeteer": "^6.4.22",
     "@storybook/svelte": "^6.5.6",
     "@types/jest": "^26.0.15",
+    "chromatic": "^6.5.6",
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",

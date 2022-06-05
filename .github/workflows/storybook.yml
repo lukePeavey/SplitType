@@ -1,0 +1,33 @@
+name: Publish Storybook
+permissions:
+  contents: write
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    # Recommended if you intend to make multiple deployments in quick
+    # succession.
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+      - name: Install and Build 🔧
+        # Install npm packages and build the Storybook files# Install npm
+        # packages and build the Storybook files
+        run: |
+          yarn install
+          yarn run storybook:build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          # The branch the action should deploy to.
+          BRANCH: storybook
+          # The output folder used by build-storybook script
+          FOLDER: storybook-static
+          # Automatically remove deleted files from the deploy branch
+          CLEAN: true

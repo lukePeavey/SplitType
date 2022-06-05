@@ -20,10 +20,13 @@ const Template = (options) => ({
 })
 
 export const NotSplit = Template.bind({})
-NotSplit.args = { types: 'none' }
+NotSplit.args = { types: 'none', position: 'absolute' }
 
 export const SplitLinesWordsAndChars = Template.bind({})
-SplitLinesWordsAndChars.args = { types: 'lines, words, chars' }
+SplitLinesWordsAndChars.args = {
+  types: 'lines, words, chars',
+  position: 'absolute',
+}
 SplitLinesWordsAndChars.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.target > .line')).length).toEqual(lineCount)
@@ -33,7 +36,7 @@ SplitLinesWordsAndChars.parameters = {
 }
 
 export const SplitLinesAndWords = Template.bind({})
-SplitLinesAndWords.args = { types: 'lines, words' }
+SplitLinesAndWords.args = { types: 'lines, words', position: 'absolute' }
 SplitLinesAndWords.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.target > .line')).length).toEqual(lineCount)
@@ -43,7 +46,7 @@ SplitLinesAndWords.parameters = {
 }
 
 export const SplitWordsAndChars = Template.bind({})
-SplitWordsAndChars.args = { types: 'words, chars' }
+SplitWordsAndChars.args = { types: 'words, chars', position: 'absolute' }
 SplitWordsAndChars.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.line')).length).toEqual(0)
@@ -53,7 +56,7 @@ SplitWordsAndChars.parameters = {
 }
 
 export const SplitLines = Template.bind({})
-SplitLines.args = { types: 'lines' }
+SplitLines.args = { types: 'lines', position: 'absolute' }
 SplitLines.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.target > .line')).length).toEqual(lineCount)
@@ -63,7 +66,7 @@ SplitLines.parameters = {
 }
 
 export const SplitWords = Template.bind({})
-SplitWords.args = { types: 'words' }
+SplitWords.args = { types: 'words', position: 'absolute' }
 SplitWords.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.line')).length).toEqual(0)

@@ -23,7 +23,7 @@ async function getSplitTextNodes(page) {
 }
 
 // Create the story template
-const Template = getTemplate({ children })
+const Template = getTemplate({ children, className: 'fixed' })
 
 export const NotSplit = Template.bind({})
 NotSplit.args = { types: 'none' }

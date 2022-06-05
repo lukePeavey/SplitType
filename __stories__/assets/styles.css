@@ -24,6 +24,17 @@ body {
   box-sizing: border-box;
 }
 
+.container {
+  margin: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 732px;
+}
+
+.container.fixed {
+  width: 732px;
+}
+
 .target {
   flex: 1;
   font-family: Roboto;
@@ -33,7 +44,6 @@ body {
   font-kerning: none;
   font-variant-ligatures: none;
   font-size: var(--fontSize);
-  max-width: 700px;
 }
 
 /* Make sure nested elements have same font size */

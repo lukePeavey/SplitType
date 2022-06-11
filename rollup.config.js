@@ -26,16 +26,16 @@ export default [
       format: 'umd',
       name: 'SplitType',
     },
-    plugins: [banner(fileHeader)],
+    plugins: [babel({ babelHelpers: 'bundled' }), banner(fileHeader)],
   },
   // ESM Module
   {
-    input: 'lib/SplitType.js',
+    input: 'lib/index.js',
     output: {
       file: 'dist/index.js',
       format: 'esm',
       name: 'SplitType',
     },
-    plugins: [banner(fileHeader)],
+    plugins: [babel({ babelHelpers: 'bundled' }), banner(fileHeader)],
   },
 ]

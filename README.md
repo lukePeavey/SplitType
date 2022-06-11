@@ -6,11 +6,22 @@ SplitType is a small javascript library that splits HTML text into elements so t
 
 Under the hood, SplitType changes the html structure of the target elements, wrapping each line, word, and/or character in a element.
 
+- [Supported Browsers](#supported-browsers)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Reference](#api-reference)
 - [Examples](#examples)
+
+## Supported Browsers
+
+Should work in all modern browsers. Internet Explorer is no longer supported (if IE support is important to you, please post a comment [here](https://github.com/lukePeavey/SplitType/issues/29).
+
+- ✅ Chrome
+- ✅ Firefox
+- ✅ Edge
+- ✅ Safari
+- ❌ Internet Explorer
 
 ## Features
 

@@ -95,6 +95,10 @@ SplitLinesAndWords.parameters = {
   },
 }
 
+export const SplitLinesAndChars = Template.bind({})
+SplitLinesAndChars.args = { types: 'lines, chars', absolute: true }
+SplitLinesAndChars.parameters = {}
+
 export const SplitWordsAndChars = Template.bind({})
 SplitWordsAndChars.args = { types: 'words, chars', absolute: true }
 SplitWordsAndChars.parameters = {

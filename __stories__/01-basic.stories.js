@@ -1,7 +1,9 @@
 import getTemplate from './helpers/getTemplate'
 import { baseArgTypes } from './constants'
+import count from './helpers/count'
 
 const children = `Split Typography for Animation`
+const { words, chars } = count(children)
 
 export default {
   title: 'Tests/Basic',
@@ -13,9 +15,6 @@ export default {
   },
 }
 
-const wordCount = children.split(' ').length
-const charCount = children.replace(/\s+/g, '').split('').length
-
 const Template = getTemplate({ children })
 
 export const NotSplit = Template.bind({})
@@ -26,8 +25,8 @@ SplitLinesWordsAndChars.args = { types: 'lines, words, chars' }
 SplitLinesWordsAndChars.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.target > .line')).length).toEqual(1)
-    expect((await page.$$('.line > .word')).length).toEqual(wordCount)
-    expect((await page.$$('.word > .char')).length).toEqual(charCount)
+    expect((await page.$$('.line > .word')).length).toEqual(words)
+    expect((await page.$$('.word > .char')).length).toEqual(chars)
   },
 }
 
@@ -36,8 +35,17 @@ SplitLinesAndWords.args = { types: 'lines, words' }
 SplitLinesAndWords.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.target > .line')).length).toEqual(1)
-    expect((await page.$$('.line > .word')).length).toEqual(wordCount)
+    expect((await page.$$('.line > .word')).length).toEqual(words)
     expect((await page.$$('.char')).length).toEqual(0)
+  },
+}
+
+export const SplitLinesAndChars = Template.bind({})
+SplitLinesAndChars.args = { types: 'lines, chars' }
+SplitLinesAndChars.parameters = {
+  async puppeteerTest(page) {
+    expect((await page.$$('.target > .line')).length).toEqual(1)
+    expect((await page.$$('.line > .char')).length).toEqual(chars)
   },
 }
 
@@ -46,8 +54,8 @@ SplitWordsAndChars.args = { types: 'words, chars' }
 SplitWordsAndChars.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.line')).length).toEqual(0)
-    expect((await page.$$('.target > .word')).length).toEqual(wordCount)
-    expect((await page.$$('.word > .char')).length).toEqual(charCount)
+    expect((await page.$$('.target > .word')).length).toEqual(words)
+    expect((await page.$$('.word > .char')).length).toEqual(chars)
   },
 }
 
@@ -66,7 +74,7 @@ SplitWords.args = { types: 'words' }
 SplitWords.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.line')).length).toEqual(0)
-    expect((await page.$$('.target > .word')).length).toEqual(wordCount)
+    expect((await page.$$('.target > .word')).length).toEqual(words)
     expect((await page.$$('.char')).length).toEqual(0)
   },
 }
@@ -77,6 +85,6 @@ SplitChars.parameters = {
   async puppeteerTest(page) {
     expect((await page.$$('.line')).length).toEqual(0)
     expect((await page.$$('.word')).length).toEqual(0)
-    expect((await page.$$('.target > .char')).length).toEqual(charCount)
+    expect((await page.$$('.target > .char')).length).toEqual(chars)
   },
 }

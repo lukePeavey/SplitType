@@ -13,5 +13,7 @@ addons.setConfig({
   theme: undefined,
   selectedPanel: undefined,
   initialActive: 'sidebar',
-  showRoots: false,
+  sidebar: {
+    showRoots: true,
+  },
 })

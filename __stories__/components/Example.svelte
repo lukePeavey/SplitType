@@ -14,16 +14,14 @@
 
   // Coerce children to an array
   const childrenArray = Array.isArray(children) ? children : [children]
-  // Reference to target element
-  let target
+  // Reference the target element(s)
+  let targetElement
   // Reference to the container element
-  let container
-  // Resizer observer (we set this to a mock observer avoid errors in IE)
+  let containerElement
+  // Resizer observer
   let resizeObserver = { observe: () => {}, disconnect: () => {} }
-  // Stores the last `contentBoxSize` from the resizeObserver. We use this to
-  // check if the width of the content box has changed since the last time
-  // the resize observer was triggered.
-  let previousContentWidth = null
+  // Stores teh width of the container element
+  let previousContainerWidth = null
   // SplitType instance
   let instance
 
@@ -32,22 +30,20 @@
   // element is resized.
   function handleResize(entry) {
     let width
-    // The resize observer is only necessary when absolute position is enabled,
-    // or we splitting text into lines
+    // Only proceed if we are splitting text into lines or using absolute pos
     if (options.absolute || /lines/.test(String(options.types))) {
-      // The new content box of the container element
       const [{ contentRect }] = entry
       width = Math.floor(contentRect.width)
-      // Only proceed if `previousContentWidth` has been set. This prevents the
-      // split method from being called again when the resizeObserver is
-      // triggered on the initial render.
-      if (previousContentWidth && previousContentWidth !== width) {
+      // Only proceed if 1) `previousContainerWidth` has been set (this avoids
+      // calling the split method when the resize observer is triggered on the
+      // initial render) and 2) if the width of the container element has
+      // changed.
+      if (previousContainerWidth && previousContainerWidth !== width) {
         instance.split()
-        console.log('re-split')
       }
     }
     // Store the width of the `contentRect`
-    previousContentWidth = width
+    previousContainerWidth = width
   }
 
   // If supported, create a resize observer for the container element
@@ -60,11 +56,9 @@
 
   onMount(() => {
     // Split the the target element(s) using the provided options
-    instance = SplitType.create(target, options)
+    instance = SplitType.create(targetElement, options)
+    resizeObserver.observe(containerElement)
     console.log(instance)
-
-    // Observe size of container element for changes
-    resizeObserver.observe(container)
   })
 
   onDestroy(() => {
@@ -72,8 +66,8 @@
   })
 </script>
 
-<div bind:this={container} class={`container ${className || ''}`}>
+<div bind:this={containerElement} class={`container ${className || ''}`}>
   {#each childrenArray as childContent}
-    <div bind:this={target} class="target">{@html childContent}</div>
+    <div bind:this={targetElement} class="target">{@html childContent}</div>
   {/each}
 </div>

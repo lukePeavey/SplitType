@@ -150,9 +150,9 @@ By default, split text nodes are set to relative position and `display:inline-bl
 
 **Responsive Text**
 
-When text is split into words and characters using relative position, the text will automatically reflow when the container is resized. However, when absolute position is enabled, or text is split into lines, text will need to re-split after the container is resized. This can be accomplished using event listener or `ResizeObserver`, and calling the `split` method once the window or container element has been resized.
+When text is split into words and characters using relative position, the text will automatically reflow when the container is resized. However, when absolute position is enabled, or text is split into lines, text will need to re-split after the container is resized. This can be accomplished using an event listener or `ResizeObserver`, and calling the `split` method once the window or container element has been resized.
 
-For a complete example, see `__stories__/components/Example.svelte`
+For a complete example, see [`__stories__/components/Example.svelte`](https://github.com/lukePeavey/SplitType/blob/master/__stories__/components/Example.svelte)
 
 ```js
 const text = new SplitType('#target')
@@ -163,12 +163,11 @@ const text = new SplitType('#target')
 const resizeObserver = new ResizeObserver(
   debounce(([entry]) => {
     // Note: you should add additional logic so the `split` method is only
-    // called if `entry.contentBoxSize.inlineSize` (the width of the container
-    // element) has changed.
+    // called when the **width** of the container element has changed.
     text.split()
   }, 500)
 )
-ro.observe(resizeObserver)
+resizeObserver.observe(containerElement)
 ```
 
 ## API Reference
@@ -181,16 +180,18 @@ The target elements for the SplitType call. This can be a selector, a single ele
 
 **`options`**
 
-| name       | type      | default                 | description                                                      |
-| ---------- | --------- | ----------------------- | ---------------------------------------------------------------- |
-| absolute   | `boolean` | `false`                 | If true, absolute position will be used to for split text nodes. |
-| tagName    | `string`  | `"div"`                 | The HTML tag that will be used for split text nodes              |
-| lineClass  | `string`  | `"line"`                | The className all split line elements                            |
-| wordClass  | `string`  | `"word"`                | The className for split word elements                            |
-| charClass  | `string`  | `"char"`                | The className for split character elements                       |
-| splitClass | `string`  | `null`                  | A className for all split text elements                          |
-| types      | `string`  | `"lines, words, chars"` | Comma separated list of types                                    |
-| split      | `string`  | ""                      | Alias for `types`                                                |
+| name         | type      | default                 | description                                                                |
+| ------------ | --------- | ----------------------- | -------------------------------------------------------------------------- |
+| absolute     | `boolean` | `false`                 | If true, absolute position will be used to for split text nodes.           |
+| tagName      | `string`  | `"div"`                 | The HTML tag that will be used for split text nodes                        |
+| isSplitClass | `string`  | `null`                  | A className that will be applied to the target element when text is split. |
+| lineClass    | `string`  | `"line"`                | The className all split line elements                                      |
+| lineClass    | `string`  | `"line"`                | The className all split line elements                                      |
+| wordClass    | `string`  | `"word"`                | The className for split word elements                                      |
+| charClass    | `string`  | `"char"`                | The className for split character elements                                 |
+| splitClass   | `string`  | `null`                  | A className for all split text elements                                    |
+| types        | `string`  | `"lines, words, chars"` | Comma separated list of types                                              |
+| split        | `string`  | ""                      | Alias for `types`                                                          |
 
 ### Instance Properties
 

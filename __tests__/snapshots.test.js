@@ -4,12 +4,12 @@ import createElement from '../lib/utils/createElement'
 describe('SplitType', () => {
   // Create two elements that will that will be used as targets
   const target1 = createElement('div', {
-    textContent: 'Foo Bar',
+    children: 'Foo Bar',
     class: 'target',
     id: 'target1',
   })
   const target2 = createElement('div', {
-    textContent: 'Hey There',
+    children: 'Hey There',
     class: 'target',
     id: 'target2',
   })

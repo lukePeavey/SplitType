@@ -11,6 +11,8 @@
 body {
   margin: 0 !important;
   padding: 0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 }
 
 .container {
@@ -36,8 +38,6 @@ body {
 }
 
 .target {
-  flex: 1;
-  font-family: Roboto;
   color: var(--text);
   line-height: 1.5;
   letter-spacing: normal;

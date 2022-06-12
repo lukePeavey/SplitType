@@ -8,21 +8,15 @@ describe(`utils.createElement(name)`, () => {
 })
 
 describe(`utils.createElement(name, attributes)`, () => {
-  it(`Creates an element with innerHTML`, () => {
-    const innerHTML = `<p id="child">text</p>`
-    const element = createElement('div', { innerHTML })
-    expect(element.querySelector('#child')).toBeInstanceOf(HTMLElement)
-    expect(element.innerHTML).toEqual(innerHTML)
-  })
   it(`Creates an element with textContent`, () => {
-    const textContent = `This is some text content`
-    const element = createElement('div', { textContent })
-    expect(element.textContent).toEqual(textContent)
+    const children = `This is some text content`
+    const element = createElement('div', { children })
+    expect(element.textContent).toEqual(children)
   })
   it(`Creates an element with textContent including emojis`, () => {
-    const textContent = `Text content with 🐳 🍔 ❤️`
-    const element = createElement('div', { textContent })
-    expect(element.textContent).toEqual(textContent)
+    const children = `Text content with 🐳 🍔 ❤️`
+    const element = createElement('div', { children })
+    expect(element.textContent).toEqual(children)
   })
   it(`Creates an element with children`, () => {
     const children = [1, 2, 3].map((i) => {

@@ -8,6 +8,10 @@ describe('utils.toWords(string)', () => {
     expect(toWords('one two three')).toEqual(words)
     expect(toWords('👍 😀 🤡')).toEqual(emojiWords)
   })
+  it(`handles string with non-breaking spaces`, () => {
+    const str = `one two${String.fromCharCode(160)}three`
+    expect(toWords(str, /\s/)).toEqual(words)
+  })
 })
 describe('utils.toWords(string, separator)', () => {
   it(`Splits string into array of words using a custom separator`, () => {

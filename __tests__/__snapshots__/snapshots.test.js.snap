@@ -51,7 +51,7 @@ SplitType {
       >
         <div
           class="word"
-          style="display: inline-block; position: relative"
+          style="display: inline-block;"
         >
           <div
             class="char"
@@ -75,7 +75,7 @@ SplitType {
          
         <div
           class="word"
-          style="display: inline-block; position: relative"
+          style="display: inline-block;"
         >
           <div
             class="char"
@@ -107,7 +107,7 @@ SplitType {
     >
       <div
         class="word"
-        style="display: inline-block; position: relative"
+        style="display: inline-block;"
       >
         <div
           class="char"
@@ -131,7 +131,7 @@ SplitType {
        
       <div
         class="word"
-        style="display: inline-block; position: relative"
+        style="display: inline-block;"
       >
         <div
           class="char"
@@ -170,7 +170,7 @@ SplitType {
   "words": Array [
     <div
       class="word"
-      style="display: inline-block; position: relative"
+      style="display: inline-block;"
     >
       <div
         class="char"
@@ -193,7 +193,7 @@ SplitType {
     </div>,
     <div
       class="word"
-      style="display: inline-block; position: relative"
+      style="display: inline-block;"
     >
       <div
         class="char"
@@ -309,7 +309,7 @@ SplitType {
     >
       <div
         class="word"
-        style="display: inline-block; position: relative"
+        style="display: inline-block;"
       >
         <div
           class="char"
@@ -333,7 +333,7 @@ SplitType {
        
       <div
         class="word"
-        style="display: inline-block; position: relative"
+        style="display: inline-block;"
       >
         <div
           class="char"
@@ -373,7 +373,7 @@ SplitType {
   "words": Array [
     <div
       class="word"
-      style="display: inline-block; position: relative"
+      style="display: inline-block;"
     >
       <div
         class="char"
@@ -396,7 +396,7 @@ SplitType {
     </div>,
     <div
       class="word"
-      style="display: inline-block; position: relative"
+      style="display: inline-block;"
     >
       <div
         class="char"
@@ -468,7 +468,7 @@ SplitType {
     >
       <div
         class="word"
-        style="display: inline-block; position: relative"
+        style="display: inline-block;"
       >
         <div
           class="char"
@@ -492,7 +492,7 @@ SplitType {
        
       <div
         class="word"
-        style="display: inline-block; position: relative"
+        style="display: inline-block;"
       >
         <div
           class="char"
@@ -532,7 +532,7 @@ SplitType {
   "words": Array [
     <div
       class="word"
-      style="display: inline-block; position: relative"
+      style="display: inline-block;"
     >
       <div
         class="char"
@@ -555,7 +555,7 @@ SplitType {
     </div>,
     <div
       class="word"
-      style="display: inline-block; position: relative"
+      style="display: inline-block;"
     >
       <div
         class="char"

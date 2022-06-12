@@ -42,6 +42,15 @@ SplitLinesAndWords.parameters = {
   },
 }
 
+export const SplitLinesAndChars = Template.bind({})
+SplitLinesAndChars.args = { types: 'lines, chars', absolute: true }
+SplitLinesAndChars.parameters = {
+  async puppeteerTest(page) {
+    expect((await page.$$('.target > .line')).length).toEqual(lineCount)
+    expect((await page.$$('.line > .char')).length).toEqual(charCount)
+  },
+}
+
 export const SplitWordsAndChars = Template.bind({})
 SplitWordsAndChars.args = { types: 'words, chars', absolute: true }
 SplitWordsAndChars.parameters = {

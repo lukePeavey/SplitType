@@ -12,25 +12,23 @@ If you have any feedback, questions, or feature requests, please feel free to op
 ```
  split-type/
     ├── .storybook/   # storybook config
-    ├── .github/      # Github actions config
+    ├── .github/      # Github workflows
     ├── __tests__/    # unit tests
-    ├── __stories__/  # visual examples and tests
+    ├── __stories__/  # Visual tests
     ├── lib/          # library source code
 ```
 
 ## Tests
 
-We use [Jest](https://jestjs.io/), [Storybook](https://storybook.js.org/), and [Puppeteer](https://pptr.dev) for testing.
+We use [Jest](https://jestjs.io/), [Storybook](https://storybook.js.org/), [Puppeteer](https://pptr.dev) and [Chromatic]() for testing.
 
 The project includes two types of tests: unit tests and visual tests.
 
 ### Unit Tests
 
-We use [Jest](https://jestjs.io/) for unit testing pure functions
-
 ### Visual Tests
 
-To test the overall functionality of the library, we use visual tests that run in a actual browser. This makes it possible to test features that rely on visual rendering (such as splitting text into lines, or applying absolute position to split text nodes.)
+To test the overall functionality of the library, we use visual tests that run in an actual browser. This makes it possible to test features that rely on visual rendering (such as splitting text into lines based on natural line breaks, or applying absolute position to split text nodes).
 
 We use the following libraries for visual testing:
 
@@ -38,44 +36,26 @@ We use the following libraries for visual testing:
 - [Puppeteer](https://pptr.dev)
 - [@storybook/addon-storyshots-puppeteer](https://storybook.js.org/addons/@storybook/addon-storyshots-puppeteer)
 
-The `__stories__` directory contains a series examples that test different features or scenarios. Each example includes the following variations:
+The `__stories__` directory contains a series examples that server as test cases. Each example includes the following variations.
 
 - Not Split (renders the element without splitting text to provide a visual baseline)
 - Split Lines, Words, and Characters
 - Split Lines and Words
+- Split Lines and characters
 - Split Words and Characters
 - Split Lines
 - Split Words
 - Split Characters
 
-The primary purpose of the visual tests is to ensure that:
+The primary purpose of the visual tests is to ensure that 1) SplitType creates the correct HTML structure when splitting text, and 2) that the split text in rendered correctly, without changing the visual appearance of the text.
 
-1. `SplitType` creates the correct DOM structure for a given set of parameters and target element(s).
-2. `SplitType` does not change the visual appearance of the text in any unexpected ways.
-
-Note: in general, there should be no visual difference between the different variations of an example. Only the underlying DOM structure should change. You can toggle the outline feature in the storybook toolbar to outline the individual DOM on the page. This provides a visual representation of how the dom structure changes in each variation.
+When things are working correctly, there should be no visible difference between the different variations of a story. Only the underlying HTML structure should change. We use Puppeteer to run tests on the storybook examples to check that each variant has the expected HTML structure.
 
 ## Running tests
 
-<br>
-
-**Running unit tests**
-
-To run the unit tests (in the `__tests__` directory):
-
-```sh
-$ yarn run test
-```
-
-```sh
-$ yarn run test:watch
-```
-
-<br>
-
 **Running storybook locally**
 
-This will start storybook on a local server. It will update automatically if you make any changes.
+This will start storybook on a local server. It will update automatically when you make changes to the code.
 
 ```sh
 $ yarn run storybook
@@ -85,7 +65,7 @@ $ yarn run storybook
 
 **Running [Puppeteer](https://pptr.dev) tests in locally**
 
-This runs the [Puppeteer](https://pptr.dev) tests (visual tests) against the local storybook server.
+This runs the [Puppeteer](https://pptr.dev) tests against the local storybook server.
 
 Note: you must start storybook before running this command
 

@@ -1,11 +1,6 @@
+@import 'variables.css';
 :root {
-  --text: #333;
-  --code: #787282;
-  --accent: #fb7a7a;
-  --primary: #1ea7fd;
-  --primaryDark: #077cc5;
-  --primaryLight: #3bb4ff;
-  --fontSize: 32px;
+  --example-font-size: 32px;
 }
 
 body {
@@ -13,6 +8,9 @@ body {
   padding: 0 !important;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-size: var(--font-size);
+  line-height: 1.5;
+  color: var(--color-default-fg);
 }
 
 .container {
@@ -38,12 +36,12 @@ body {
 }
 
 .target {
-  color: var(--text);
+  color: var(--color-default-fg);
   line-height: 1.5;
   letter-spacing: normal;
   font-kerning: none;
   font-variant-ligatures: none;
-  font-size: var(--fontSize);
+  font-size: var(--example-font-size);
 }
 
 /* Make sure nested elements have same font size */
@@ -67,13 +65,13 @@ Buttons and Links
 }
 
 .target a {
-  color: var(--primary);
+  color: var(--color-accent-fg);
 }
 
 .target a:hover,
 .target a:active {
   transition: all 100ms ease-in-out;
-  color: var(--primaryDark);
+  color: var(--color-accent-dark-fg);
 }
 
 .target button {
@@ -84,8 +82,8 @@ Buttons and Links
   appearance: none;
   cursor: pointer;
   outline: none;
-  color: var(--primary);
-  border: solid 1px var(--primary);
+  color: var(--color-accent-fg);
+  border: solid 1px var(--color-accent-fg);
   padding: 4px 10px;
   border-radius: 6px;
   font-size: inherit;
@@ -94,16 +92,16 @@ Buttons and Links
 }
 
 .target button:hover {
-  background: var(--primary);
+  background: var(--color-accent-fg);
   transition: all 100ms ease-in-out;
   color: #fff;
 }
 
 .target strong {
-  color: var(--accent);
+  color: var(--color-secondary-fg);
 }
 
 .target code {
   font-family: Courier;
-  color: var(--code);
+  color: var(--color-code-fg);
 }

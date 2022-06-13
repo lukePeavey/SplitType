@@ -14,8 +14,6 @@
 
   // Coerce children to an array
   const childrenArray = Array.isArray(children) ? children : [children]
-  // Reference the target element(s)
-  let targetElement
   // Reference to the container element
   let containerElement
   // Resizer observer
@@ -48,7 +46,7 @@
 
   // If supported, create a resize observer for the container element
   if (window.ResizeObserver !== undefined) {
-    resizeObserver = new ResizeObserver(debounce(handleResize, 350))
+    resizeObserver = new ResizeObserver(debounce(handleResize, 100))
   }
 
   // Support "types=none" as an alias for types=""
@@ -56,7 +54,7 @@
 
   onMount(() => {
     // Split the the target element(s) using the provided options
-    instance = SplitType.create(targetElement, options)
+    instance = SplitType.create('.target', options)
     resizeObserver.observe(containerElement)
     console.log(instance)
   })
@@ -68,6 +66,6 @@
 
 <div bind:this={containerElement} class={`container ${className || ''}`}>
   {#each childrenArray as childContent}
-    <div bind:this={targetElement} class="target">{@html childContent}</div>
+    <div class="target">{@html childContent}</div>
   {/each}
 </div>

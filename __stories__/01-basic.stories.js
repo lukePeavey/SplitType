@@ -8,11 +8,6 @@ const { words, chars } = count(children)
 export default {
   title: 'Tests/Basic',
   argTypes: { ...baseArgTypes },
-  parameters: {
-    docs: {
-      page: null,
-    },
-  },
 }
 
 const Template = getTemplate({ children })

@@ -1,0 +1,203 @@
+/* PrismJS 1.28.0
+https://prismjs.com/download.html#themes=prism-coy&languages=markup+css+clike+javascript&plugins=highlight-keywords */
+code[class*='language-'],
+pre[class*='language-'] {
+  color: #000;
+  background: 0 0;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 1em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+pre[class*='language-'] {
+  position: relative;
+  margin: 0.5em 0;
+  overflow: visible;
+  padding: 1px;
+}
+pre[class*='language-'] > code {
+  position: relative;
+  z-index: 1;
+  border-left: 10px solid #358ccb;
+  box-shadow: -1px 0 0 0 #358ccb, 0 0 0 1px #dfdfdf;
+  background-color: #fdfdfd;
+  background-image: linear-gradient(
+    transparent 50%,
+    rgba(69, 142, 209, 0.04) 50%
+  );
+  background-size: 3em 3em;
+  background-origin: content-box;
+  background-attachment: local;
+}
+code[class*='language-'] {
+  max-height: inherit;
+  height: inherit;
+  padding: 0 1em;
+  display: block;
+  overflow: auto;
+}
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
+  background-color: #fdfdfd;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 1em;
+}
+:not(pre) > code[class*='language-'] {
+  position: relative;
+  padding: 0.2em;
+  border-radius: 0.3em;
+  color: #c92c2c;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: inline;
+  white-space: normal;
+}
+pre[class*='language-']:after,
+pre[class*='language-']:before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0.75em;
+  left: 0.18em;
+  width: 40%;
+  height: 20%;
+  max-height: 13em;
+  box-shadow: 0 13px 8px #979797;
+  -webkit-transform: rotate(-2deg);
+  -moz-transform: rotate(-2deg);
+  -ms-transform: rotate(-2deg);
+  -o-transform: rotate(-2deg);
+  transform: rotate(-2deg);
+}
+pre[class*='language-']:after {
+  right: 0.75em;
+  left: auto;
+  -webkit-transform: rotate(2deg);
+  -moz-transform: rotate(2deg);
+  -ms-transform: rotate(2deg);
+  -o-transform: rotate(2deg);
+  transform: rotate(2deg);
+}
+#docs-root .token.block-comment,
+#docs-root .token.cdata,
+#docs-root .token.comment,
+#docs-root .token.doctype,
+#docs-root .token.prolog {
+  font-style: normal;
+  color: #7d8b99;
+}
+#docs-root .token.punctuation {
+  color: #5f6364;
+}
+#docs-root .token.boolean,
+#docs-root .token.constant,
+#docs-root .token.deleted,
+#docs-root .token.function-name,
+#docs-root .token.number,
+#docs-root .token.symbol {
+  color: #c92c2c;
+}
+
+#docs-root .token.builtin,
+#docs-root .token.char,
+#docs-root .token.inserted,
+#docs-root .token.selector,
+#docs-root .token.string,
+#docs-root .token.tag.attr-value,
+#docs-root .token.regex,
+#docs-root .token.important {
+  color: #0a3069;
+}
+
+#docs-root .token.entity,
+#docs-root .token.url {
+  color: #a67f59;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+#docs-root .token.variable,
+#docs-root .token.class-name {
+  color: #953800;
+}
+
+#docs-root .token.tag {
+  color: #116329;
+}
+#docs-root .token.atrule,
+#docs-root .token.attr-value,
+#docs-root .token.keyword,
+#docs-root .token.operator {
+  color: #cf222e;
+}
+#docs-root .token.module #docs-root .token.method,
+#docs-root .token.property-access,
+#docs-root .token.function {
+  color: #8250df;
+}
+
+#docs-root .token.attr-name,
+#docs-root .token.number,
+#docs-root .token.property {
+  color: #0550ae;
+}
+
+#docs-root .language-css .token.string,
+#docs-root .style .token.string {
+  color: #a67f59;
+  background: rgba(255, 255, 255, 0.5);
+}
+#docs-root .token.important {
+  font-weight: 400;
+}
+#docs-root .token.bold {
+  font-weight: 700;
+}
+#docs-root .token.italic {
+  font-style: italic;
+}
+#docs-root .token.entity {
+  cursor: help;
+}
+#docs-root .token.namespace {
+  opacity: 0.7;
+}
+@media screen and (max-width: 767px) {
+  pre[class*='language-']:after,
+  pre[class*='language-']:before {
+    bottom: 14px;
+    box-shadow: none;
+  }
+}
+pre[class*='language-'].line-numbers.line-numbers {
+  padding-left: 0;
+}
+pre[class*='language-'].line-numbers.line-numbers code {
+  padding-left: 3.8em;
+}
+pre[class*='language-'].line-numbers.line-numbers .line-numbers-rows {
+  left: 0;
+}
+pre[class*='language-'][data-line] {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+pre[data-line] code {
+  position: relative;
+  padding-left: 4em;
+}
+pre .line-highlight {
+  margin-top: 0;
+}

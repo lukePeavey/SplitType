@@ -1,0 +1,77 @@
+@import 'variables.css';
+
+body {
+  font-size: var(--font-body) !important;
+}
+
+#docs-root .sbdocs {
+  font-size: var(--font-size);
+}
+.sbdocs-content > *:first-child {
+  margin-top: 0 !important;
+}
+
+#docs-root .sbdocs-h1,
+#docs-root .sbdocs-h2,
+#docs-root .sbdocs-h3,
+#docs-root .sbdocs-h4,
+#docs-root .sbdocs-h5,
+#docs-root .sbdocs-h5 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+#docs-root .sbdocs-h1 {
+  padding-bottom: 0.3em;
+  font-size: 2em;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+#docs-root .sbdocs-h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+#docs-root .sbdocs-h3 {
+  font-size: 1.25em;
+}
+
+#docs-root .sbdocs-h4 {
+  font-size: 1em;
+}
+
+/* Top level wrapper for documentation pages  */
+#docs-root .sbdocs.sbdocs-wrapper {
+  padding: 2rem 20px;
+}
+
+/* Inline code styles */
+#docs-root code {
+  font-family: var(--font-mono);
+  color: inherit;
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: var(--code-font-size);
+  background-color: var(--color-canvas-subtle);
+  border-radius: 6px;
+  -webkit-font-smoothing: auto !important;
+}
+
+/* Code block container */
+#docs-root .docblock-source {
+  margin-top: 0;
+  margin-bottom: 16px;
+  box-shadow: none;
+  background-color: var(--color-canvas-subtle);
+  border: none;
+  font-size: var(--font-size);
+}
+
+/* Code block  */
+#docs-root pre.prismjs {
+  font-size: var(--code-font-size);
+  -webkit-font-smoothing: auto !important;
+}

@@ -1,0 +1,68 @@
+import { Meta } from '@storybook/addon-docs'
+
+<Meta title="API Reference" />
+
+# API Reference
+
+```js
+new SplitType(target, [options])
+```
+
+The splitType class splits the text content of one or more elements and returns a new `SplitType` instance.
+
+#### target: &nbsp; `string | Element | NodeList | Element[]`
+
+Specifies the target elements for the SplitType call. This can be a selector string, a single `Element`, a collection of elements (such as a `NodeList`, jQuery Object, or `Array`).
+
+#### options: &nbsp; `SplitTypeOptions`
+
+| name       | type      | default                 | description                                                      |
+| ---------- | --------- | ----------------------- | ---------------------------------------------------------------- |
+| absolute   | `boolean` | `false`                 | If true, absolute position will be used to for split text nodes. |
+| tagName    | `string`  | `"div"`                 | The HTML tag that will be used for split text nodes              |
+| lineClass  | `string`  | `"line"`                | The className all split line elements                            |
+| wordClass  | `string`  | `"word"`                | The className for split word elements                            |
+| charClass  | `string`  | `"char"`                | The className for split character elements                       |
+| splitClass | `string`  | `null`                  | A className for all split text elements                          |
+| types      | `string`  | `"lines, words, chars"` | Comma separated list of types                                    |
+| split      | `string`  | `""`                    | Alias for `types`                                                |
+
+## Instance Properties
+
+#### `instance.lines`&nbsp;:&nbsp; `HTMLElement[]`
+
+An array of all split line elements in the splitType instance. If there are multiple target elements, this will include split lines from all elements.
+
+#### `instance.words`&nbsp;:&nbsp;`HTMLElement[]`
+
+An array of the split word elements in the splitType instance. If there are multiple target elements, this will include split words from all elements.
+
+#### `instance.chars`&nbsp;:&nbsp;`HTMLElement[]`
+
+An array of the split character elements. If there are multiple target elements, this will include split chars from all elements.
+
+#### `instance.split(options) => void`
+
+This method is automatically called by the SplitType constructor. But it can be called manually to re-split text using different options.
+
+#### `instance.revert() => void`
+
+Restores the target elements associated with this SplitType instance to their original text content. It also clears cached data associated with the split text nodes.
+
+## Static Properties
+
+#### `SplitType.defaults`&nbsp;:&nbsp;`SplitTypeOptions`
+
+Gets the current default settings for all SplitType instances. The default settings can be modified using the `setDefaults` methods.
+
+#### `SplitType.setDefaults(options: any) => SplitTypeOptions`
+
+Sets the default options for all `SplitType` instances. The provided object will be merged with the existing `SplitType.defaults` object. Returns the new defaults object.
+
+#### `SplitType.create(target, options) => SplitType`
+
+Creates a new `SplitType` instance using the provided parameters. This method can be used to call SplitType without using the `new` keyword. Returns the SplitType instance
+
+#### `SplitType.revert(target)`
+
+Reverts the target element(s) if they are currently split. This provides a way to revert split text without a reference to the `SplitType` instance.

@@ -60,6 +60,7 @@
     "husky": "^7.0.0",
     "jest": "27.x",
     "jest-transform-svelte": "^2.1.1",
+    "jest-transformer-mdx": "^3.3.0",
     "lodash": "^4.17.21",
     "onchange": "^7.1.0",
     "prettier": "^2.6.2",
@@ -79,7 +80,8 @@
   "jest": {
     "transform": {
       "^.+\\.js$": "babel-jest",
-      "^.+\\.svelte$": "jest-transform-svelte"
+      "^.+\\.svelte$": "jest-transform-svelte",
+      "^.+\\.mdx?$": "@storybook/addon-docs/jest-transform-mdx"
     },
     "transformIgnorePatterns": [
       "node_modules/(?!(@storybook/svelte)/)"

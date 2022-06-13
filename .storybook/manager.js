@@ -1,6 +1,8 @@
 // .storybook/manager.js
 
 import { addons } from '@storybook/addons'
+import { themes } from '@storybook/theming'
+import theme from './theme'
 
 addons.setConfig({
   isFullscreen: false,
@@ -10,7 +12,7 @@ addons.setConfig({
   sidebarAnimations: true,
   enableShortcuts: true,
   isToolshown: true,
-  theme: undefined,
+  theme: theme,
   selectedPanel: undefined,
   initialActive: 'sidebar',
   sidebar: {

@@ -1,14 +1,14 @@
 import getTemplate from './helpers/getTemplate'
 import { baseArgTypes } from './constants'
 
-const actualText = `Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.`
+const text = `Typography is the art and technique of arranging type to make written language legible, readable, and appealing when displayed.`
 
 const children = `
 <!--this is a comment node -->
 <!--this is a comment node -->
 <!--this is a comment node -->
 <!--this is a comment node -->
-${actualText}
+${text}
 <!--this is a comment node -->
 <!--this is a comment node -->
 <!--this is a comment node -->
@@ -16,8 +16,8 @@ ${actualText}
 `
 
 const lineCount = 3
-const wordCount = actualText.split(' ').length
-const charCount = actualText.replace(/\s+/g, '').split('').length
+const wordCount = text.split(' ').length
+const charCount = text.replace(/\s+/g, '').split('').length
 
 export default {
   title: 'Tests/With HTML Comments',

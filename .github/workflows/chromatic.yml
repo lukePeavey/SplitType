@@ -5,8 +5,9 @@ name: 'Chromatic'
 
 # Event for the workflow
 on:
-  pull_request:
-    branches: [master]
+  push:
+    branches-ignore:
+      - 'gh-pages'
 
 # List of jobs
 jobs:

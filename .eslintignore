@@ -2,6 +2,10 @@ umd/*
 dist/*
 es/*
 node_modules/*
+storybook-static/*  
 private/*
 examples/*
 .vscode/*
+__stories__/*
+__tests__/*
+

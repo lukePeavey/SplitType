@@ -13,11 +13,6 @@ body {
   color: var(--color-default-fg);
 }
 
-.container {
-  margin: 16px;
-  padding: 16px;
-}
-
 *,
 *::before,
 *::after {
@@ -25,7 +20,7 @@ body {
 }
 
 .container {
-  margin: 16px;
+  margin: 0;
   padding: 16px;
   width: 100%;
   max-width: 732px;

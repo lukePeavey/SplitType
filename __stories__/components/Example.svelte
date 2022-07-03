@@ -56,10 +56,11 @@
     // Split the the target element(s) using the provided options
     instance = SplitType.create('.target', options)
     resizeObserver.observe(containerElement)
-    console.log(instance)
   })
 
   onDestroy(() => {
+    // Cleanup splitType instance
+    instance.revert()
     resizeObserver.disconnect()
   })
 </script>

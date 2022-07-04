@@ -216,26 +216,22 @@ resizeObserver.observe(containerElement)
 
 ### SplitType(target, [options])
 
-SplitType is a class, so it cannot be called without the `new` keyword. However, you can use the static method `SplitType.create`
-
 **`target`**
 
-The target elements for the SplitType call. This can be a selector, a single element, a collection of elements (ie NodeList, jQuery Object, etc).
+The target element(s) for the SplitType call. This can be a selector string, a single element, or a collection of elements (ie NodeList, jQuery object, or array).
 
 **`options`**
 
-| name         | type      | default                 | description                                                                |
-| ------------ | --------- | ----------------------- | -------------------------------------------------------------------------- |
-| absolute     | `boolean` | `false`                 | If true, absolute position will be used to for split text nodes.           |
-| tagName      | `string`  | `"div"`                 | The HTML tag that will be used for split text nodes                        |
-| isSplitClass | `string`  | `null`                  | A className that will be applied to the target element when text is split. |
-| lineClass    | `string`  | `"line"`                | The className all split line elements                                      |
-| lineClass    | `string`  | `"line"`                | The className all split line elements                                      |
-| wordClass    | `string`  | `"word"`                | The className for split word elements                                      |
-| charClass    | `string`  | `"char"`                | The className for split character elements                                 |
-| splitClass   | `string`  | `null`                  | A className for all split text elements                                    |
-| types        | `string`  | `"lines, words, chars"` | Comma separated list of types                                              |
-| split        | `string`  | ""                      | Alias for `types`                                                          |
+| name       | type      | default                 | description                                                      |
+| ---------- | --------- | ----------------------- | ---------------------------------------------------------------- |
+| absolute   | `boolean` | `false`                 | If true, absolute position will be used to for split text nodes. |
+| tagName    | `string`  | `"div"`                 | The HTML tag that will be used for split text nodes              |
+| lineClass  | `string`  | `"line"`                | The className all split line elements                            |
+| wordClass  | `string`  | `"word"`                | The className for split word elements                            |
+| charClass  | `string`  | `"char"`                | The className for split character elements                       |
+| splitClass | `string`  | `null`                  | A className for all split text elements                          |
+| types      | `string`  | `"lines, words, chars"` | Comma separated list of types                                    |
+| split      | `string`  | ""                      | Alias for `types`                                                |
 
 ### Instance Properties
 

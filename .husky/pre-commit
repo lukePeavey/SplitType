@@ -1,3 +1,3 @@
 #!/bin/sh
 
-npx pretty-quick --staged
+# npx pretty-quick --staged

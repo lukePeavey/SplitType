@@ -1,6 +1,6 @@
 {
   "name": "split-type",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "A javascript library that splits plain text into individual lines, words, and characters.",
   "main": "umd/index.js",
   "module": "dist/index.js",

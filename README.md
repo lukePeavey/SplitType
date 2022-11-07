@@ -106,7 +106,7 @@ const text = new SplitType('#target')
 // Splits text into words and characters
 const text = new SplitType('#target', { types: 'words, chars' })
 // Splits text into lines
-const text = new SplitType('#target', { types: 'words' }
+const text = new SplitType('#target', { types: 'words' })
 ```
 
 ### Accessing split text nodes

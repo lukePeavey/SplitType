@@ -14,6 +14,7 @@ declare module 'split-type' {
     splitClass: string
     types: TypesListString | TypesValue[]
     split: TypesListString | TypesValue[]
+    addIndex: boolean
   }
 
   type TargetElement =

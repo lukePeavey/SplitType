@@ -25,8 +25,6 @@ declare module 'split-type' {
     split: TypesList
   }
 
-  let splitTypeOptions: SplitTypeOptions
-
   type TargetElement =
     | string
     | HTMLElement

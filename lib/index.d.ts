@@ -1,9 +1,18 @@
 declare module 'split-type' {
-  type TypesValue = 'lines' | 'words' | 'chars'
-  type TypesListString =
-    | TypesValue
-    | `${TypesValue}, ${TypesValue}`
-    | `${TypesValue}, ${TypesValue}, ${TypesValue}`
+  type StringedCombination<
+    T extends string[],
+    Sep extends string = ' ',
+    All = T[number],
+    Item = All,
+  > = Item extends string
+    ? Item | `${Item}${Sep}${StringedCombination<[], Sep, Exclude<All, Item>>}`
+    : never
+
+  type TypesValue = ['lines', 'words', 'chars']
+
+  type TypesListString = StringedCombination<TypesValue, ','>
+
+  type TypesList = TypesListString | TypesValue[number][]
 
   type SplitTypeOptions = {
     absolute: boolean
@@ -12,8 +21,8 @@ declare module 'split-type' {
     wordClass: string
     charClass: string
     splitClass: string
-    types: TypesListString | TypesValue[]
-    split: TypesListString | TypesValue[]
+    types: TypesList
+    split: TypesList
   }
 
   type TargetElement =

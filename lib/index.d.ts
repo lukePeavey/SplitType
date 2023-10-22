@@ -48,6 +48,16 @@ declare module 'split-type' {
     chars: HTMLElement[] | null
 
     /**
+     * Returns the data store object. This is mainly for debugging purposes. 
+     * 
+     */
+    static data: any
+
+    /**
+     * Removes all data from the cache. 
+     */
+    static clearData (): void 
+    /**
      * Get the default settings for all SplitType calls, or set new ones.
      *
      * If setting: the value should be object containing specific settings to

@@ -1,7 +1,18 @@
 {
-  "env": { "node": true, "browser": true, "es6": true },
-  "extends": ["airbnb-base", "prettier"],
-  "parserOptions": { "ecmaVersion": 12, "sourceType": "module" },
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "airbnb-base",
+    "prettier",
+    "plugin:storybook/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
   "rules": {
     "no-lonely-if": 0,
     "no-console": 0,

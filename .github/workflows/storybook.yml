@@ -20,8 +20,8 @@ jobs:
         # Install npm packages and build the Storybook files# Install npm
         # packages and build the Storybook files
         run: |
-          yarn install
-          yarn run storybook:build
+          npm install
+          npm run storybook:build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:

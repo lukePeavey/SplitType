@@ -14,14 +14,11 @@
   "scripts": {
     "test": "jest --env=jsdom",
     "test:watch": "jest --env=jsdom --watchAll",
-    "puppeteer": "NODE_ENV=development jest --testMatch='**/__stories__/**/?*.test.js' --env=jsdom  ",
-    "puppeteer:watch": "NODE_ENV=development jest --testMatch='**/__stories__/**/?*.test.js' --env=jsdom  --watchAll",
-    "puppeteer:static": "yarn storybook:build && jest --testMatch='**/__stories__/**/?*.test.js' --env=jsdom",
     "build": "rollup -c",
     "build:watch": "onchange 'lib/**/*.js' -- rollup -c",
     "lint": "./node_modules/.bin/eslint . --color && echo \"eslint: no lint errors\"",
     "storybook": "storybook dev -p 6006 ",
-    "storybook:build": "storybook build"
+    "build-storybook": "storybook build"
   },
   "repository": {
     "type": "git",

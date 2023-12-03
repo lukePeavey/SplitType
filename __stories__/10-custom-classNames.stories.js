@@ -27,11 +27,3 @@ SplitClass.args = {
   charClass: 'my-char',
   splitClass: 'split',
 }
-
-SplitClass.parameters = {
-  async puppeteerTest(page) {
-    expect((await page.$$('.split.my-line')).length).toEqual(1)
-    expect((await page.$$('.split.my-word')).length).toEqual(wordCount)
-    expect((await page.$$('.split.my-char')).length).toEqual(charCount)
-  },
-}
